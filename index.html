@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFC Exam & Eligibility Checker | 證監會考試及資格檢查器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ED1C24;
+            --primary-dark: #C41920;
+            --secondary: #1a1a2e;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --white: #ffffff;
+            --gray-100: #f1f3f5;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-100); color: var(--gray-800); line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+        /* Language Bar */
+        .lang-bar { background: var(--secondary); padding: 10px 0; }
+        .lang-selector { display: flex; justify-content: flex-end; gap: 5px; }
+        .lang-btn { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+        .lang-btn:hover { background: rgba(255,255,255,0.1); }
+        .lang-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+
+        /* Header */
+        .header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: 25px 0; }
+        .header-content { display: flex; align-items: center; gap: 20px; }
+        .logo { width: 70px; height: auto; border-radius: 8px; background: white; padding: 5px; }
+        .header h1 { font-size: 1.6rem; margin-bottom: 5px; }
+        .header p { opacity: 0.9; font-size: 0.95rem; }
+
+        /* Main */
+        .main-content { padding: 30px 0 50px; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; overflow: hidden; }
+        .card-header { background: var(--gray-100); padding: 20px 25px; border-bottom: 1px solid var(--gray-200); }
+        .card-header h2 { color: var(--secondary); font-size: 1.3rem; margin-bottom: 5px; }
+        .card-header p { color: var(--gray-600); font-size: 0.9rem; }
+        .card-body { padding: 25px; }
+        .card-footer { padding: 15px 25px; background: var(--gray-100); border-top: 1px solid var(--gray-200); display: flex; justify-content: space-between; gap: 10px; }
+
+        /* Form */
+        .form-group { margin-bottom: 25px; }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-group > label { display: block; font-weight: 600; margin-bottom: 10px; }
+
+        /* Radio/Checkbox Cards */
+        .option-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+        .option-card { cursor: pointer; display: flex; }
+        .option-card input { display: none; }
+        .option-content { background: white; border: 2px solid var(--gray-300); border-radius: 8px; padding: 15px; transition: all 0.2s; text-align: center; width: 100%; min-height: 95px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .option-card:hover .option-content { border-color: var(--primary); }
+        .option-card input:checked + .option-content { border-color: var(--primary); background: #fff5f5; box-shadow: 0 0 0 3px rgba(237,28,36,0.1); }
+        .option-type { display: block; font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 5px; }
+        .option-name { display: block; font-size: 0.85rem; font-weight: 500; color: var(--secondary); }
+        .option-detail { display: block; font-size: 0.75rem; color: var(--gray-600); margin-top: 3px; }
+        .option-badge { display: inline-block; margin-top: 5px; padding: 2px 8px; background: var(--success); color: white; font-size: 0.65rem; border-radius: 4px; }
+        .option-badge.new { background: #17a2b8; }
+
+        /* Toggle */
+        .toggle-grid { display: flex; gap: 15px; }
+        .toggle-card { flex: 1; cursor: pointer; }
+        .toggle-card input { display: none; }
+        .toggle-content { background: white; border: 2px solid var(--gray-300); border-radius: 8px; padding: 15px; text-align: center; transition: all 0.2s; }
+        .toggle-card:hover .toggle-content { border-color: var(--gray-600); }
+        .toggle-card input:checked + .toggle-content { border-color: var(--primary); background: #fff5f5; }
+
+        /* Select */
+        select { width: 100%; padding: 12px; border: 2px solid var(--gray-300); border-radius: 8px; font-size: 1rem; background: white; }
+        select:focus { outline: none; border-color: var(--primary); }
+
+        /* Input */
+        .input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .input-row input { flex: 1; padding: 10px; border: 2px solid var(--gray-300); border-radius: 8px; font-size: 1rem; }
+        .input-row input:focus { outline: none; border-color: var(--primary); }
+        .input-row .unit { color: var(--gray-600); }
+        .help-text { font-size: 0.8rem; color: var(--gray-600); }
+
+        /* Checkbox Grid */
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+        .checkbox-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: white; border: 2px solid var(--gray-300); border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+        .checkbox-item:hover { border-color: var(--gray-600); }
+        .checkbox-item input { width: 16px; height: 16px; accent-color: var(--primary); }
+
+        /* Info Box */
+        .info-box { display: flex; gap: 10px; padding: 12px; background: #e3f2fd; border-radius: 8px; margin-top: 15px; border-left: 4px solid #2196f3; }
+        .info-box.warning { background: #fff8e1; border-left-color: var(--warning); }
+        .info-box p { font-size: 0.85rem; color: var(--gray-800); }
+
+        /* Buttons */
+        .btn { display: inline-block; padding: 12px 24px; font-size: 1rem; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-secondary { background: white; color: var(--gray-800); border: 2px solid var(--gray-300); }
+        .btn-secondary:hover { background: var(--gray-100); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #218838; }
+
+        /* Steps */
+        .step { display: none; }
+        .step.active { display: block; }
+
+        /* Results */
+        .result-box { padding: 20px; border-radius: 8px; margin-bottom: 15px; }
+        .result-box.success { background: #d4edda; border: 1px solid #c3e6cb; }
+        .result-box.warning { background: #fff3cd; border: 1px solid #ffeeba; }
+        .result-box.danger { background: #f8d7da; border: 1px solid #f5c6cb; }
+        .result-box.info { background: #d1ecf1; border: 1px solid #bee5eb; }
+        .result-box h3 { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .result-list { list-style: none; }
+        .result-list li { padding: 12px; background: white; margin-bottom: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); }
+        .result-list li.exempt { border-left-color: var(--success); background: #f0fff4; }
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
+        .badge-danger { background: var(--danger); color: white; }
+        .badge-success { background: var(--success); color: white; }
+
+        /* Footer */
+        .footer { background: var(--secondary); color: rgba(255,255,255,0.8); padding: 30px 0; margin-top: 40px; }
+        .footer h4 { color: white; margin-bottom: 10px; }
+        .footer a { color: rgba(255,255,255,0.8); }
+        .footer a:hover { color: var(--primary); }
+
+        @media (max-width: 600px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .option-grid { grid-template-columns: repeat(2, 1fr); }
+            .card-footer { flex-direction: column; }
+            .card-footer .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-bar">
+        <div class="container">
+            <div class="lang-selector">
+                <button class="lang-btn" onclick="setLang('en')" id="lang_en">English</button>
+                <button class="lang-btn active" onclick="setLang('tc')" id="lang_tc">繁體中文</button>
+                <button class="lang-btn" onclick="setLang('sc')" id="lang_sc">简体中文</button>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <img src="2cexam_logo-272x300.png" alt="2CExam" class="logo">
+                <div>
+                    <h1 id="title">證監會考試及資格檢查器</h1>
+                    <p id="subtitle">根據證監會《勝任能力的指引》(2024年10月) 確定考試要求及牌照資格</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Step 1 -->
+            <div class="step active" id="step1">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 id="s1_title">第一步：角色及受規管活動</h2>
+                        <p id="s1_desc">選擇您申請的角色及受規管活動類型。</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label id="role_label">您申請的是什麼角色？</label>
+                            <div class="toggle-grid">
+                                <label class="toggle-card">
+                                    <input type="radio" name="role" value="LR">
+                                    <div class="toggle-content">
+                                        <div>👤</div>
+                                        <strong id="role_lr">持牌代表 (LR)</strong>
+                                    </div>
+                                </label>
+                                <label class="toggle-card">
+                                    <input type="radio" name="role" value="RO">
+                                    <div class="toggle-content">
+                                        <div>👔</div>
+                                        <strong id="role_ro">負責人員 (RO)</strong>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label id="ra_label">哪種受規管活動 (RA)？</label>
+                            <div class="option-grid">
+                                <label class="option-card"><input type="radio" name="raType" value="1"><div class="option-content"><span class="option-type">第1類</span><span class="option-name" id="ra1">證券交易</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="2"><div class="option-content"><span class="option-type">第2類</span><span class="option-name" id="ra2">期貨合約交易</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="3"><div class="option-content"><span class="option-type">第3類</span><span class="option-name" id="ra3">槓桿式外匯交易</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="4"><div class="option-content"><span class="option-type">第4類</span><span class="option-name" id="ra4">就證券提供意見</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="5"><div class="option-content"><span class="option-type">第5類</span><span class="option-name" id="ra5">就期貨合約提供意見</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="6"><div class="option-content"><span class="option-type">第6類</span><span class="option-name" id="ra6">就機構融資提供意見</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="7"><div class="option-content"><span class="option-type">第7類</span><span class="option-name" id="ra7">提供自動化交易服務</span><span class="option-badge" id="no_exam">無須考試</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="8"><div class="option-content"><span class="option-type">第8類</span><span class="option-name" id="ra8">提供證券保證金融資</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="9"><div class="option-content"><span class="option-type">第9類</span><span class="option-name" id="ra9">資產管理</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="10"><div class="option-content"><span class="option-type">第10類</span><span class="option-name" id="ra10">提供信貸評級服務</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="13"><div class="option-content"><span class="option-type">第13類</span><span class="option-name" id="ra13">為集體投資計劃提供存管服務</span><span class="option-badge new" id="new_2024">2024新增</span></div></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div></div>
+                        <button class="btn btn-primary" onclick="nextStep(1)" id="btn_next1">下一步 →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step" id="step2">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 id="s2_title">第二步：牌照紀錄</h2>
+                        <p id="s2_desc">您的牌照紀錄會影響考試豁免。</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label id="current_license">您目前是否持有證監會牌照？</label>
+                            <div class="toggle-grid">
+                                <label class="toggle-card"><input type="radio" name="currentLicense" value="yes"><div class="toggle-content"><strong id="yes1">是</strong></div></label>
+                                <label class="toggle-card"><input type="radio" name="currentLicense" value="no" checked><div class="toggle-content"><strong id="no1">否</strong></div></label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="currentRAGroup" style="display:none;">
+                            <label id="current_ra_label">目前持有的牌照：</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="1"><span>第1類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="2"><span>第2類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="4"><span>第4類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="5"><span>第5類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="6"><span>第6類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="8"><span>第8類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="9"><span>第9類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="10"><span>第10類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="13"><span>第13類</span></label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="formerGroup">
+                            <label id="former_license">您過去是否曾持有牌照？</label>
+                            <div class="toggle-grid">
+                                <label class="toggle-card"><input type="radio" name="formerLicense" value="yes"><div class="toggle-content"><strong id="yes2">是</strong></div></label>
+                                <label class="toggle-card"><input type="radio" name="formerLicense" value="no" checked><div class="toggle-content"><strong id="no2">否</strong></div></label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="yearsAbsentGroup" style="display:none;">
+                            <label id="years_absent">離開行業多長時間：</label>
+                            <div class="input-row">
+                                <input type="number" id="yearsAbsent" min="0" max="50" step="0.5" value="0">
+                                <span class="unit" id="years_unit">年</span>
+                            </div>
+                            <p class="help-text" id="years_help">3-8年 = 需要CPT時數；>8年 = 沒有豁免</p>
+                        </div>
+                        <div class="form-group" id="formerRAGroup" style="display:none;">
+                            <label id="former_ra_label">過去持有的牌照：</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="1"><span>第1類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="2"><span>第2類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="4"><span>第4類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="5"><span>第5類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="6"><span>第6類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="8"><span>第8類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="9"><span>第9類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="10"><span>第10類</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="13"><span>第13類</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-secondary" onclick="prevStep(2)" id="btn_back2">← 返回</button>
+                        <button class="btn btn-primary" onclick="nextStep(2)" id="btn_next2">下一步 →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step" id="step3">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 id="s3_title">第三步：資歷及經驗</h2>
+                        <p id="s3_desc">您的資歷決定考試豁免。</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label id="academic_label">最高學歷：</label>
+                            <select id="academicQual">
+                                <option value="none" id="acad_none">沒有正式學歷</option>
+                                <option value="secondary" id="acad_sec">中學教育 (HKCEE/HKDSE)</option>
+                                <option value="degreeOther" id="acad_deg_other">學士學位（其他領域）</option>
+                                <option value="degreeRelevant" id="acad_deg_rel">會計/商業/經濟/金融/法律學士學位</option>
+                                <option value="degreeRelevantCourses" id="acad_deg_courses">學士學位（其他）+ 2門相關課程</option>
+                                <option value="masters" id="acad_masters">相關領域碩士學位</option>
+                                <option value="mba" id="acad_mba">MBA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label id="prof_label">專業資格：</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="profQual" value="CFA"><span>CFA</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="profQual" value="CIIA"><span>CIIA</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="profQual" value="CFP"><span>CFP</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="profQual" value="FRM"><span>FRM</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="profQual" value="CPA"><span>CPA</span></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label id="exp_8_label">過去8年相關經驗：</label>
+                            <div class="input-row">
+                                <input type="number" id="industryExp" min="0" max="8" step="0.5" value="0">
+                                <span class="unit" id="years_unit2">年</span>
+                            </div>
+                            <p class="help-text" id="exp_8_help">5年以上 = RIQ豁免</p>
+                        </div>
+                        <div class="form-group">
+                            <label id="exp_6_label">過去6年相關經驗：</label>
+                            <div class="input-row">
+                                <input type="number" id="industryExp6" min="0" max="6" step="0.5" value="0">
+                                <span class="unit" id="years_unit3">年</span>
+                            </div>
+                            <p class="help-text" id="exp_6_help">負責人員需3年以上</p>
+                        </div>
+                        <div class="form-group">
+                            <label id="mgmt_label">管理經驗：</label>
+                            <div class="input-row">
+                                <input type="number" id="managementExp" min="0" max="30" step="0.5" value="0">
+                                <span class="unit" id="years_unit4">年</span>
+                            </div>
+                            <p class="help-text" id="mgmt_help">負責人員需2年以上</p>
+                        </div>
+                        <div class="form-group">
+                            <label id="pi_label">是否只服務專業投資者？</label>
+                            <div class="toggle-grid">
+                                <label class="toggle-card"><input type="radio" name="piOnly" value="yes"><div class="toggle-content"><strong id="yes3">是</strong></div></label>
+                                <label class="toggle-card"><input type="radio" name="piOnly" value="no" checked><div class="toggle-content"><strong id="no3">否</strong></div></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-secondary" onclick="prevStep(3)" id="btn_back3">← 返回</button>
+                        <button class="btn btn-primary" onclick="nextStep(3)" id="btn_next3">下一步 →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step" id="step4">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 id="s4_title">第四步：考試紀錄</h2>
+                        <p id="s4_desc">選擇過去3年內已通過的試卷。</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label id="lrp_papers_label">LRP試卷（監管）：</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="1"><span id="p1">卷一</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="2"><span id="p2">卷二</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="3"><span id="p3">卷三</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="4"><span id="p4">卷四</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="5"><span id="p5">卷五</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="6"><span id="p6">卷六</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="18"><span id="p18">卷十八</span></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label id="riq_papers_label">RIQ試卷（實務）：</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="7"><span id="p7">卷七</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="8"><span id="p8">卷八</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="9"><span id="p9">卷九</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="10"><span id="p10">卷十</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="11"><span id="p11">卷十一</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="12"><span id="p12">卷十二</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="19"><span id="p19">卷十九</span></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label id="add_papers_label">其他試卷：</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="15"><span id="p15">卷十五</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="16"><span id="p16">卷十六</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="17"><span id="p17">卷十七</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-secondary" onclick="prevStep(4)" id="btn_back4">← 返回</button>
+                        <button class="btn btn-success" onclick="calculate()" id="btn_calc">計算結果</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="step" id="stepResults">
+                <div id="resultsContent"></div>
+                <button class="btn btn-secondary" onclick="restart()" style="width:100%;margin-top:20px;" id="btn_restart">重新開始</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-bottom:25px;">
+                <div>
+                    <h4 id="disclaimer_title">免責聲明</h4>
+                    <p style="font-size:0.85rem;margin-bottom:15px;" id="disclaimer_text">本計算器根據證監會《勝任能力的指引》(2024年10月) 提供一般指引。個別情況可能有所不同。如需了解官方要求，請直接諮詢證監會。</p>
+                    <p><a href="https://www.sfc.hk/TC/rules-and-standards/codes-and-guidelines/guidelines/guidelines-on-competence" target="_blank" id="link_sfc">證監會指引</a> | <a href="https://www.hksi.org" target="_blank">HKSI</a> | <a href="https://2cexam.com.hk" target="_blank">2CExam</a></p>
+                </div>
+                <div>
+                    <h4 id="contact_title">📞 聯絡我們</h4>
+                    <p style="font-size:0.85rem;margin-bottom:8px;" id="contact_address">📍 <span id="address_text">中環德輔道中59號中南行301室</span></p>
+                    <p style="font-size:0.85rem;margin-bottom:8px;" id="contact_mtr">🚇 <span id="mtr_text">中環地鐵站B出口</span></p>
+                    <p style="font-size:0.85rem;margin-bottom:8px;" id="contact_hours_title">🕐 <span id="hours_title">辦公時間</span></p>
+                    <p style="font-size:0.8rem;margin-left:20px;margin-bottom:5px;" id="hours_days">星期一至五: 9AM-12PM, 1PM-6PM</p>
+                    <p style="font-size:0.75rem;margin-left:20px;margin-bottom:8px;opacity:0.8;" id="hours_lunch">（午飯時間不提供服務）</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom:15px;">&nbsp;</h4>
+                    <p style="font-size:0.85rem;margin-bottom:8px;">📱 <a href="tel:+85221109644" style="color:rgba(255,255,255,0.8);">+852 2110 9644</a></p>
+                    <p style="font-size:0.85rem;margin-bottom:8px;">✉️ <a href="mailto:info@2cexam.com" style="color:rgba(255,255,255,0.8);">info@2cexam.com</a></p>
+                    <p style="font-size:0.85rem;margin-bottom:8px;">💬 WhatsApp: <a href="https://wa.me/85293472064" target="_blank" style="color:rgba(255,255,255,0.8);">+852 9347 2064</a></p>
+                    <p style="font-size:0.85rem;margin-bottom:8px;">💚 WeChat: hk2cexam</p>
+                </div>
+            </div>
+            <div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:15px;text-align:center;">
+                <p style="font-size:0.8rem;opacity:0.8;">© 2024 2CExam. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language - default Traditional Chinese
+        let lang = 'tc';
+        const texts = {
+            en: {
+                title: "SFC Exam & Eligibility Checker",
+                subtitle: "Determine your exam requirements and licensing eligibility based on SFC Guidelines on Competence (Oct 2024)",
+                s1_title: "Step 1: Role & Regulated Activity",
+                s1_desc: "Select your role and the regulated activity you're applying for.",
+                role_label: "What role are you applying for?",
+                role_lr: "Licensed Representative (LR)",
+                role_ro: "Responsible Officer (RO)",
+                ra_label: "Which Regulated Activity (RA)?",
+                ra1: "Dealing in Securities", ra2: "Dealing in Futures", ra3: "Leveraged FX Trading",
+                ra4: "Advising on Securities", ra5: "Advising on Futures", ra6: "Corporate Finance",
+                ra7: "Automated Trading", ra8: "Margin Financing", ra9: "Asset Management",
+                ra10: "Credit Rating", ra13: "Depositary Services", no_exam: "No Exam", new_2024: "New 2024",
+                s2_title: "Step 2: Licensing History", s2_desc: "Your licensing history affects exam exemptions.",
+                current_license: "Are you currently licensed by the SFC?",
+                yes1: "Yes", no1: "No", yes2: "Yes", no2: "No", yes3: "Yes", no3: "No",
+                current_ra_label: "Current licenses:",
+                former_license: "Have you been licensed in the past?",
+                former_ra_label: "Previous licenses:",
+                years_absent: "Years out of the industry:",
+                years_unit: "years", years_unit2: "years", years_unit3: "years", years_unit4: "years",
+                years_help: "3-8 years = CPT hours required; >8 years = no exemption",
+                s3_title: "Step 3: Qualifications & Experience", s3_desc: "Your qualifications determine exam exemptions.",
+                academic_label: "Highest Academic Qualification:",
+                acad_none: "No formal qualification",
+                acad_sec: "Secondary education (HKCEE/HKDSE)",
+                acad_deg_other: "Bachelor's degree (other fields)",
+                acad_deg_rel: "Bachelor's in Accounting/Business/Economics/Finance/Law",
+                acad_deg_courses: "Bachelor's (other) + 2 relevant courses",
+                acad_masters: "Master's in relevant field",
+                acad_mba: "MBA",
+                prof_label: "Professional Qualifications:",
+                exp_8_label: "Relevant experience in past 8 years:",
+                exp_8_help: "5+ years = RIQ exemption",
+                exp_6_label: "Relevant experience in past 6 years:",
+                exp_6_help: "RO requires 3+ years",
+                mgmt_label: "Management experience:",
+                mgmt_help: "RO requires 2+ years",
+                pi_label: "Serving professional investors only?",
+                s4_title: "Step 4: Exam History", s4_desc: "Select papers passed within 3 years.",
+                lrp_papers_label: "LRP Papers (Regulatory):",
+                riq_papers_label: "RIQ Papers (Practical):",
+                add_papers_label: "Additional Papers:",
+                p1: "Paper 1", p2: "Paper 2", p3: "Paper 3", p4: "Paper 4", p5: "Paper 5", p6: "Paper 6",
+                p7: "Paper 7", p8: "Paper 8", p9: "Paper 9", p10: "Paper 10", p11: "Paper 11", p12: "Paper 12",
+                p15: "Paper 15", p16: "Paper 16", p17: "Paper 17", p18: "Paper 18", p19: "Paper 19",
+                btn_next1: "Next Step →", btn_next2: "Next Step →", btn_next3: "Next Step →",
+                btn_back2: "← Back", btn_back3: "← Back", btn_back4: "← Back",
+                btn_calc: "Calculate Results", btn_restart: "Start Over",
+                result_eligible: "You appear to be eligible",
+                result_warning: "Conditional Eligibility",
+                result_not_eligible: "Eligibility Concerns",
+                papers_required: "Papers You Need to Pass",
+                papers_exempt: "Papers You Are Exempt From",
+                summary: "Summary",
+                papers_to_pass: "Papers to pass:",
+                papers_exempt_count: "Papers exempt:",
+                cpt_required: "CPT Hours Required",
+                cpt_before: "Must complete BEFORE applying",
+                alert_select: "Please select a role and regulated activity.",
+                disclaimer_title: "Disclaimer",
+                disclaimer_text: "This calculator provides general guidance based on SFC Guidelines on Competence (October 2024). Individual circumstances may vary. For official requirements, consult the SFC directly.",
+                link_sfc: "SFC Guidelines",
+                contact_title: "📞 Contact Us",
+                address_text: "Room 301, 59 Des Voeux Road Central, Central",
+                mtr_text: "Central MTR Exit B",
+                hours_title: "Office Hours",
+                hours_days: "Mon-Fri: 9AM-12PM, 1PM-6PM",
+                hours_lunch: "(No service during lunch)"
+            },
+            tc: {
+                title: "證監會考試及資格檢查器",
+                subtitle: "根據證監會《勝任能力的指引》(2024年10月) 確定考試要求及牌照資格",
+                s1_title: "第一步：角色及受規管活動",
+                s1_desc: "選擇您申請的角色及受規管活動類型。",
+                role_label: "您申請的是什麼角色？",
+                role_lr: "持牌代表 (LR)",
+                role_ro: "負責人員 (RO)",
+                ra_label: "哪種受規管活動 (RA)？",
+                ra1: "證券交易", ra2: "期貨合約交易", ra3: "槓桿式外匯交易",
+                ra4: "就證券提供意見", ra5: "就期貨合約提供意見", ra6: "就機構融資提供意見",
+                ra7: "提供自動化交易服務", ra8: "提供證券保證金融資", ra9: "資產管理",
+                ra10: "提供信貸評級服務", ra13: "為集體投資計劃提供存管服務", no_exam: "無須考試", new_2024: "2024新增",
+                s2_title: "第二步：牌照紀錄", s2_desc: "您的牌照紀錄會影響考試豁免。",
+                current_license: "您目前是否持有證監會牌照？",
+                yes1: "是", no1: "否", yes2: "是", no2: "否", yes3: "是", no3: "否",
+                current_ra_label: "目前持有的牌照：",
+                former_license: "您過去是否曾持有牌照？",
+                former_ra_label: "過去持有的牌照：",
+                years_absent: "離開行業多長時間：",
+                years_unit: "年", years_unit2: "年", years_unit3: "年", years_unit4: "年",
+                years_help: "3-8年 = 需要CPT時數；>8年 = 沒有豁免",
+                s3_title: "第三步：資歷及經驗", s3_desc: "您的資歷決定考試豁免。",
+                academic_label: "最高學歷：",
+                acad_none: "沒有正式學歷",
+                acad_sec: "中學教育 (HKCEE/HKDSE)",
+                acad_deg_other: "學士學位（其他領域）",
+                acad_deg_rel: "會計/商業/經濟/金融/法律學士學位",
+                acad_deg_courses: "學士學位（其他）+ 2門相關課程",
+                acad_masters: "相關領域碩士學位",
+                acad_mba: "MBA",
+                prof_label: "專業資格：",
+                exp_8_label: "過去8年相關經驗：",
+                exp_8_help: "5年以上 = RIQ豁免",
+                exp_6_label: "過去6年相關經驗：",
+                exp_6_help: "負責人員需3年以上",
+                mgmt_label: "管理經驗：",
+                mgmt_help: "負責人員需2年以上",
+                pi_label: "是否只服務專業投資者？",
+                s4_title: "第四步：考試紀錄", s4_desc: "選擇過去3年內已通過的試卷。",
+                lrp_papers_label: "LRP試卷（監管）：",
+                riq_papers_label: "RIQ試卷（實務）：",
+                add_papers_label: "其他試卷：",
+                p1: "卷一", p2: "卷二", p3: "卷三", p4: "卷四", p5: "卷五", p6: "卷六",
+                p7: "卷七", p8: "卷八", p9: "卷九", p10: "卷十", p11: "卷十一", p12: "卷十二",
+                p15: "卷十五", p16: "卷十六", p17: "卷十七", p18: "卷十八", p19: "卷十九",
+                btn_next1: "下一步 →", btn_next2: "下一步 →", btn_next3: "下一步 →",
+                btn_back2: "← 返回", btn_back3: "← 返回", btn_back4: "← 返回",
+                btn_calc: "計算結果", btn_restart: "重新開始",
+                result_eligible: "您似乎符合資格",
+                result_warning: "有條件符合資格",
+                result_not_eligible: "資格問題",
+                papers_required: "需要通過的試卷",
+                papers_exempt: "獲豁免的試卷",
+                summary: "摘要",
+                papers_to_pass: "需通過試卷：",
+                papers_exempt_count: "豁免試卷：",
+                cpt_required: "需要CPT時數",
+                cpt_before: "必須在申請前完成",
+                alert_select: "請選擇角色及受規管活動。",
+                disclaimer_title: "免責聲明",
+                disclaimer_text: "本計算器根據證監會《勝任能力的指引》(2024年10月) 提供一般指引。個別情況可能有所不同。如需了解官方要求，請直接諮詢證監會。",
+                link_sfc: "證監會指引",
+                contact_title: "📞 聯絡我們",
+                address_text: "中環德輔道中59號中南行301室",
+                mtr_text: "中環地鐵站B出口",
+                hours_title: "辦公時間",
+                hours_days: "星期一至五: 9AM-12PM, 1PM-6PM",
+                hours_lunch: "（午飯時間不提供服務）"
+            },
+            sc: {
+                title: "证监会考试及资格检查器",
+                subtitle: "根据证监会《胜任能力的指引》(2024年10月) 确定考试要求及牌照资格",
+                s1_title: "第一步：角色及受规管活动",
+                s1_desc: "选择您申请的角色及受规管活动类型。",
+                role_label: "您申请的是什么角色？",
+                role_lr: "持牌代表 (LR)",
+                role_ro: "负责人员 (RO)",
+                ra_label: "哪种受规管活动 (RA)？",
+                ra1: "证券交易", ra2: "期货合约交易", ra3: "杠杆式外汇交易",
+                ra4: "就证券提供意见", ra5: "就期货合约提供意见", ra6: "就机构融资提供意见",
+                ra7: "提供自动化交易服务", ra8: "提供证券保证金融资", ra9: "资产管理",
+                ra10: "提供信贷评级服务", ra13: "为集体投资计划提供存管服务", no_exam: "无须考试", new_2024: "2024新增",
+                s2_title: "第二步：牌照记录", s2_desc: "您的牌照记录会影响考试豁免。",
+                current_license: "您目前是否持有证监会牌照？",
+                yes1: "是", no1: "否", yes2: "是", no2: "否", yes3: "是", no3: "否",
+                current_ra_label: "目前持有的牌照：",
+                former_license: "您过去是否曾持有牌照？",
+                former_ra_label: "过去持有的牌照：",
+                years_absent: "离开行业多长时间：",
+                years_unit: "年", years_unit2: "年", years_unit3: "年", years_unit4: "年",
+                years_help: "3-8年 = 需要CPT时数；>8年 = 没有豁免",
+                s3_title: "第三步：资历及经验", s3_desc: "您的资历决定考试豁免。",
+                academic_label: "最高学历：",
+                acad_none: "没有正式学历",
+                acad_sec: "中学教育 (HKCEE/HKDSE)",
+                acad_deg_other: "学士学位（其他领域）",
+                acad_deg_rel: "会计/商业/经济/金融/法律学士学位",
+                acad_deg_courses: "学士学位（其他）+ 2门相关课程",
+                acad_masters: "相关领域硕士学位",
+                acad_mba: "MBA",
+                prof_label: "专业资格：",
+                exp_8_label: "过去8年相关经验：",
+                exp_8_help: "5年以上 = RIQ豁免",
+                exp_6_label: "过去6年相关经验：",
+                exp_6_help: "负责人员需3年以上",
+                mgmt_label: "管理经验：",
+                mgmt_help: "负责人员需2年以上",
+                pi_label: "是否只服务专业投资者？",
+                s4_title: "第四步：考试记录", s4_desc: "选择过去3年内已通过的试卷。",
+                lrp_papers_label: "LRP试卷（监管）：",
+                riq_papers_label: "RIQ试卷（实务）：",
+                add_papers_label: "其他试卷：",
+                p1: "卷一", p2: "卷二", p3: "卷三", p4: "卷四", p5: "卷五", p6: "卷六",
+                p7: "卷七", p8: "卷八", p9: "卷九", p10: "卷十", p11: "卷十一", p12: "卷十二",
+                p15: "卷十五", p16: "卷十六", p17: "卷十七", p18: "卷十八", p19: "卷十九",
+                btn_next1: "下一步 →", btn_next2: "下一步 →", btn_next3: "下一步 →",
+                btn_back2: "← 返回", btn_back3: "← 返回", btn_back4: "← 返回",
+                btn_calc: "计算结果", btn_restart: "重新开始",
+                result_eligible: "您似乎符合资格",
+                result_warning: "有条件符合资格",
+                result_not_eligible: "资格问题",
+                papers_required: "需要通过的试卷",
+                papers_exempt: "获豁免的试卷",
+                summary: "摘要",
+                papers_to_pass: "需通过试卷：",
+                papers_exempt_count: "豁免试卷：",
+                cpt_required: "需要CPT时数",
+                cpt_before: "必须在申请前完成",
+                alert_select: "请选择角色及受规管活动。",
+                disclaimer_title: "免责声明",
+                disclaimer_text: "本计算器根据证监会《胜任能力的指引》(2024年10月) 提供一般指引。个别情况可能有所不同。如需了解官方要求，请直接咨询证监会。",
+                link_sfc: "证监会指引",
+                contact_title: "📞 联络我们",
+                address_text: "中环德辅道中59号中南行301室",
+                mtr_text: "中环地铁站B出口",
+                hours_title: "办公时间",
+                hours_days: "星期一至五: 9AM-12PM, 1PM-6PM",
+                hours_lunch: "（午饭时间不提供服务）"
+            }
+        };
+
+        function setLang(l) {
+            lang = l;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('lang_' + l).classList.add('active');
+            const t = texts[l];
+            for (const [id, text] of Object.entries(t)) {
+                const el = document.getElementById(id);
+                if (el) el.textContent = text;
+            }
+            // Update html lang attribute
+            document.documentElement.lang = l === 'tc' ? 'zh-Hant' : l === 'sc' ? 'zh-Hans' : 'en';
+        }
+
+        // Navigation
+        function nextStep(current) {
+            if (current === 1) {
+                const role = document.querySelector('input[name="role"]:checked');
+                const ra = document.querySelector('input[name="raType"]:checked');
+                if (!role || !ra) {
+                    alert(texts[lang].alert_select);
+                    return;
+                }
+            }
+            document.getElementById('step' + current).classList.remove('active');
+            document.getElementById('step' + (current + 1)).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function prevStep(current) {
+            document.getElementById('step' + current).classList.remove('active');
+            document.getElementById('step' + (current - 1)).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Event listeners
+        document.querySelectorAll('input[name="currentLicense"]').forEach(r => {
+            r.addEventListener('change', function() {
+                document.getElementById('currentRAGroup').style.display = this.value === 'yes' ? 'block' : 'none';
+                document.getElementById('formerGroup').style.display = this.value === 'no' ? 'block' : 'none';
+            });
+        });
+
+        document.querySelectorAll('input[name="formerLicense"]').forEach(r => {
+            r.addEventListener('change', function() {
+                const show = this.value === 'yes';
+                document.getElementById('yearsAbsentGroup').style.display = show ? 'block' : 'none';
+                document.getElementById('formerRAGroup').style.display = show ? 'block' : 'none';
+            });
+        });
+
+        // Paper names
+        const paperNames = {
+            en: { '1':'Paper 1 - Securities & Futures Regulation','2':'Paper 2 - Securities Regulation','3':'Paper 3 - Derivatives Regulation','4':'Paper 4 - Credit Rating Regulation','5':'Paper 5 - Corporate Finance Regulation','6':'Paper 6 - Asset Management Regulation','7':'Paper 7 - Financial Markets','8':'Paper 8 - Securities','9':'Paper 9 - Derivatives','10':'Paper 10 - Credit Rating','11':'Paper 11 - Corporate Finance','12':'Paper 12 - Asset Management','15':'Paper 15 - Sponsors (Principals)','16':'Paper 16 - Sponsors (Representatives)','17':'Paper 17 - Takeovers','18':'Paper 18 - Depositary Regulation','19':'Paper 19 - Depositary Services' },
+            tc: { '1':'卷一 - 證券及期貨規例','2':'卷二 - 證券規例','3':'卷三 - 衍生工具規例','4':'卷四 - 信貸評級規例','5':'卷五 - 機構融資規例','6':'卷六 - 資產管理規例','7':'卷七 - 金融市場','8':'卷八 - 證券','9':'卷九 - 衍生工具','10':'卷十 - 信貸評級','11':'卷十一 - 機構融資','12':'卷十二 - 資產管理','15':'卷十五 - 保薦人(主事人)','16':'卷十六 - 保薦人(代表)','17':'卷十七 - 收購合併','18':'卷十八 - 存管服務規例','19':'卷十九 - 存管服務' },
+            sc: { '1':'卷一 - 证券及期货规例','2':'卷二 - 证券规例','3':'卷三 - 衍生工具规例','4':'卷四 - 信贷评级规例','5':'卷五 - 机构融资规例','6':'卷六 - 资产管理规例','7':'卷七 - 金融市场','8':'卷八 - 证券','9':'卷九 - 衍生工具','10':'卷十 - 信贷评级','11':'卷十一 - 机构融资','12':'卷十二 - 资产管理','15':'卷十五 - 保荐人(主事人)','16':'卷十六 - 保荐人(代表)','17':'卷十七 - 收购合并','18':'卷十八 - 存管服务规例','19':'卷十九 - 存管服务' }
+        };
+
+        // Exam requirements
+        const examReq = {
+            RIQ: { '1':['7','8'],'2':['7','9'],'3':[],'4':['7','8'],'5':['7','9'],'6':['7','11'],'7':[],'8':['7','8'],'9':['7','12'],'10':['7','10'],'13':['7','19'] },
+            LRP_LR: { '1':['1'],'2':['1'],'3':[],'4':['1'],'5':['1'],'6':['1'],'7':[],'8':['1'],'9':['1'],'10':['1'],'13':['1'] },
+            LRP_RO: { '1':['1','2'],'2':['1','3'],'3':[],'4':['1','2'],'5':['1','3'],'6':['1','5'],'7':[],'8':['1','2'],'9':['1','6'],'10':['1','4'],'13':['1','18'] }
+        };
+
+        function calculate() {
+            const t = texts[lang];
+            const role = document.querySelector('input[name="role"]:checked')?.value || 'LR';
+            const raType = document.querySelector('input[name="raType"]:checked')?.value || '1';
+            const currentLic = document.querySelector('input[name="currentLicense"]:checked')?.value || 'no';
+            const formerLic = document.querySelector('input[name="formerLicense"]:checked')?.value || 'no';
+            const yearsAbsent = parseFloat(document.getElementById('yearsAbsent')?.value) || 0;
+            const academicQual = document.getElementById('academicQual')?.value || 'none';
+            const industryExp = parseFloat(document.getElementById('industryExp')?.value) || 0;
+            const industryExp6 = parseFloat(document.getElementById('industryExp6')?.value) || 0;
+            const managementExp = parseFloat(document.getElementById('managementExp')?.value) || 0;
+            const piOnly = document.querySelector('input[name="piOnly"]:checked')?.value || 'no';
+
+            const profQuals = Array.from(document.querySelectorAll('input[name="profQual"]:checked')).map(c => c.value);
+            const currentRAs = Array.from(document.querySelectorAll('input[name="currentRA"]:checked')).map(c => c.value);
+            const formerRAs = Array.from(document.querySelectorAll('input[name="formerRA"]:checked')).map(c => c.value);
+            const passedPapers = Array.from(document.querySelectorAll('input[name="passedPapers"]:checked')).map(c => c.value);
+
+            let eligibility = { ok: true, reasons: [], warnings: [] };
+            let required = [], exempt = [], cptHours = 0, notes = [];
+
+            // Type 7 - no exam
+            if (raType === '7') {
+                notes.push(lang === 'en' ? 'Type 7 has no RIQ or LRP requirements.' : lang === 'tc' ? '第7類沒有RIQ或LRP要求。' : '第7类没有RIQ或LRP要求。');
+            } else if (raType === '3') {
+                eligibility.warnings.push(lang === 'en' ? 'Type 3 not covered by HKSI exams. Consult SFC.' : lang === 'tc' ? '第3類不包括在HKSI考試。請諮詢證監會。' : '第3类不包括在HKSI考试。请咨询证监会。');
+            } else {
+                const lrp = role === 'RO' ? (examReq.LRP_RO[raType] || []) : (examReq.LRP_LR[raType] || []);
+                const riq = examReq.RIQ[raType] || [];
+
+                let riqExempt = false, riqReason = '';
+                if (['degreeRelevant','masters','mba'].includes(academicQual)) { riqExempt = true; riqReason = lang === 'en' ? 'Relevant degree' : lang === 'tc' ? '相關學位' : '相关学位'; }
+                if (profQuals.some(q => ['CFA','CIIA','CFP'].includes(q))) { riqExempt = true; riqReason = 'CFA/CIIA/CFP'; }
+                if (industryExp >= 5) { riqExempt = true; riqReason = lang === 'en' ? '5+ years experience' : lang === 'tc' ? '5年以上經驗' : '5年以上经验'; }
+                if (piOnly === 'yes' && industryExp >= 8 && raType === '9') { riqExempt = true; riqReason = lang === 'en' ? '8+ years (PI only)' : lang === 'tc' ? '8年以上經驗(專業投資者)' : '8年以上经验(专业投资者)'; }
+                if (currentLic === 'yes' && currentRAs.includes(raType)) { riqExempt = true; riqReason = lang === 'en' ? 'Currently licensed' : lang === 'tc' ? '目前持牌' : '目前持牌'; }
+
+                let lrpExempt = false, lrpReason = '';
+                if (currentLic === 'yes' && currentRAs.includes(raType)) { lrpExempt = true; lrpReason = lang === 'en' ? 'Currently licensed' : lang === 'tc' ? '目前持牌' : '目前持牌'; }
+                if (formerLic === 'yes' && yearsAbsent < 3 && formerRAs.includes(raType)) { lrpExempt = riqExempt = true; lrpReason = riqReason = lang === 'en' ? 'Former licensee <3 years' : lang === 'tc' ? '3年內曾持牌' : '3年内曾持牌'; }
+                if (formerLic === 'yes' && yearsAbsent >= 3 && yearsAbsent <= 8 && formerRAs.includes(raType)) {
+                    cptHours = Math.ceil(yearsAbsent) * 5;
+                    lrpExempt = riqExempt = true;
+                    lrpReason = riqReason = lang === 'en' ? 'Former licensee (CPT required)' : lang === 'tc' ? '曾持牌(需CPT)' : '曾持牌(需CPT)';
+                }
+
+                riq.forEach(p => {
+                    if (passedPapers.includes(p)) exempt.push({p, r: lang === 'en' ? 'Passed' : lang === 'tc' ? '已通過' : '已通过'});
+                    else if (riqExempt) exempt.push({p, r: riqReason});
+                    else required.push({p, t: 'RIQ'});
+                });
+
+                lrp.forEach(p => {
+                    if (passedPapers.includes(p)) {
+                        exempt.push({p, r: lang === 'en' ? 'Passed' : lang === 'tc' ? '已通過' : '已通过'});
+                    } else if (p === '1' && currentLic === 'yes') {
+                        exempt.push({p, r: lang === 'en' ? 'Currently licensed' : lang === 'tc' ? '目前持牌' : '目前持牌'});
+                    } else if (p === '1' && formerLic === 'yes' && yearsAbsent <= 8 && formerRAs.length > 0) {
+                        // Paper 1 exempt for former licensees within 8 years
+                        const reason = yearsAbsent < 3
+                            ? (lang === 'en' ? 'Former licensee <3 years' : lang === 'tc' ? '3年內曾持牌' : '3年内曾持牌')
+                            : (lang === 'en' ? 'Former licensee ≤8 years' : lang === 'tc' ? '8年內曾持牌' : '8年内曾持牌');
+                        exempt.push({p, r: reason});
+                    } else if (lrpExempt && yearsAbsent < 3) {
+                        exempt.push({p, r: lrpReason});
+                    } else {
+                        required.push({p, t: 'LRP'});
+                    }
+                });
+            }
+
+            if (academicQual === 'none' && currentLic !== 'yes') {
+                eligibility.ok = false;
+                eligibility.reasons.push(lang === 'en' ? 'Minimum academic qualification required.' : lang === 'tc' ? '需要最低學歷要求。' : '需要最低学历要求。');
+            }
+            if (role === 'RO') {
+                if (industryExp6 < 3) eligibility.warnings.push(lang === 'en' ? `RO needs 3+ years in 6 years (you: ${industryExp6})` : lang === 'tc' ? `負責人員需過去6年內3年經驗(您:${industryExp6}年)` : `负责人员需过去6年内3年经验(您:${industryExp6}年)`);
+                if (managementExp < 2) eligibility.warnings.push(lang === 'en' ? `RO needs 2+ years management (you: ${managementExp})` : lang === 'tc' ? `負責人員需2年管理經驗(您:${managementExp}年)` : `负责人员需2年管理经验(您:${managementExp}年)`);
+            }
+
+            // Show results
+            let html = '';
+            const pn = paperNames[lang];
+
+            if (raType === '7') {
+                html += `<div class="result-box success"><h3>✓ ${t.result_eligible}</h3><p>${notes[0]}</p></div>`;
+            } else {
+                const statusClass = !eligibility.ok ? 'danger' : eligibility.warnings.length ? 'warning' : 'success';
+                const statusIcon = !eligibility.ok ? '✗' : eligibility.warnings.length ? '⚠️' : '✓';
+                const statusTitle = !eligibility.ok ? t.result_not_eligible : eligibility.warnings.length ? t.result_warning : t.result_eligible;
+
+                html += `<div class="result-box ${statusClass}"><h3>${statusIcon} ${statusTitle}</h3>`;
+                if (eligibility.reasons.length) html += `<ul>${eligibility.reasons.map(r => `<li>${r}</li>`).join('')}</ul>`;
+                if (eligibility.warnings.length) html += `<ul>${eligibility.warnings.map(w => `<li>${w}</li>`).join('')}</ul>`;
+                html += '</div>';
+
+                if (required.length) {
+                    html += `<div class="card"><div class="card-header" style="background:#ffebee;"><h2>📝 ${t.papers_required}</h2></div><div class="card-body"><ul class="result-list">`;
+                    required.forEach(r => html += `<li><span>${pn[r.p] || 'Paper '+r.p}</span><span class="badge badge-danger">${r.t}</span></li>`);
+                    html += '</ul></div></div>';
+                }
+
+                if (exempt.length) {
+                    html += `<div class="card"><div class="card-header" style="background:#e8f5e9;"><h2>✓ ${t.papers_exempt}</h2></div><div class="card-body"><ul class="result-list">`;
+                    exempt.forEach(e => html += `<li class="exempt"><span>${pn[e.p] || 'Paper '+e.p}</span><span class="badge badge-success">${e.r}</span></li>`);
+                    html += '</ul></div></div>';
+                }
+
+                if (cptHours > 0) {
+                    html += `<div class="result-box warning"><h3>⏰ ${t.cpt_required}</h3><p style="font-size:2rem;font-weight:700;color:#ED1C24;">${cptHours} ${lang === 'en' ? 'hours' : '小時'}</p><p>${t.cpt_before}</p></div>`;
+                }
+
+                html += `<div class="card"><div class="card-header"><h2>📊 ${t.summary}</h2></div><div class="card-body">
+                    <p><strong>${t.papers_to_pass}</strong> <span style="color:${required.length ? '#dc3545' : '#28a745'};font-weight:700;">${required.length}</span></p>
+                    <p><strong>${t.papers_exempt_count}</strong> <span style="color:#28a745;font-weight:700;">${exempt.length}</span></p>
+                    ${cptHours ? `<p><strong>${lang === 'en' ? 'CPT Hours:' : 'CPT時數：'}</strong> <span style="color:#ffc107;font-weight:700;">${cptHours}</span></p>` : ''}
+                </div></div>`;
+            }
+
+            document.getElementById('resultsContent').innerHTML = html;
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('stepResults').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function restart() {
+            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = r.defaultChecked);
+            document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+            document.querySelectorAll('input[type="number"]').forEach(n => n.value = 0);
+            document.getElementById('academicQual').value = 'none';
+            document.getElementById('currentRAGroup').style.display = 'none';
+            document.getElementById('yearsAbsentGroup').style.display = 'none';
+            document.getElementById('formerRAGroup').style.display = 'none';
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step1').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>

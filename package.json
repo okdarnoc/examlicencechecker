@@ -1,0 +1,12 @@
+{
+  "name": "examlicencechecker",
+  "version": "1.0.0",
+  "description": "SFC Exam & Eligibility Checker based on Guidelines on Competence (October 2024)",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'Static site - no build required'"
+  },
+  "keywords": ["sfc", "hong kong", "licensing", "exam", "calculator", "2cexam"],
+  "author": "2CExam",
+  "license": "MIT"
+}
