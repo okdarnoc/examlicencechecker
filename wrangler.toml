@@ -1,0 +1,14 @@
+# Cloudflare Pages Configuration
+# This is a static site - no worker needed
+
+name = "examlicencechecker"
+pages_build_output_dir = "."
+
+# Production branch
+# IMPORTANT: Always use 'main' (not 'master')
+
+# Custom domain: examlicencechecker.paradox-management.com
+# (requires CNAME pointing to examlicencechecker.pages.dev)
+
+# Deployment command:
+# npx wrangler pages deploy .
