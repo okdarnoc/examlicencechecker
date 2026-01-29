@@ -714,6 +714,265 @@
             LRP_RO: { '1':['1','2'],'2':['1','3'],'3':[],'4':['1','2'],'5':['1','3'],'6':['1','5'],'7':[],'8':['1','2'],'9':['1','6'],'10':['1','4'],'13':['1','18'] }
         };
 
+        // 2CExam Product Database
+        const products = {
+            '1': {
+                printedQB: 'https://2cexam.com.hk/hksi-le-paper-1-pass-paper-question-bank/',
+                onlineQB: 'https://hksiiiqepasspaper.online/product/hksip1eonline/?lang=en',
+                bible: 'https://2cexam.com.hk/hksi-le-paper-1-pass-paper-bible/',
+                hasBible: true
+            },
+            '2': {
+                printedQB: 'https://2cexam.com.hk/hksi-le-paper-2-pass-paper-question-bank/',
+                onlineQB: 'https://hksiiiqepasspaper.online/product/hksip2eonline/?lang=en',
+                bible: 'https://2cexam.com.hk/hk/hksi-le-paper-2-pass-paper-bible/',
+                hasBible: true
+            },
+            '3': {
+                printedQB: 'https://2cexam.com.hk/hksi-le-paper-3-pass-paper-question-bank/',
+                onlineQB: 'https://hksiiiqepasspaper.online/product/hksip3eonline/?lang=en',
+                hasBible: false
+            },
+            '5': {
+                printedQB: 'https://2cexam.com.hk/hksi-le-paper-5-pass-paper-question-bank/',
+                onlineQB: 'https://hksiiiqepasspaper.online/product/hksip5eonline/?lang=en',
+                hasBible: false
+            },
+            '6': {
+                printedQB: 'https://2cexam.com.hk/hk/hksi-le-paper-6-pass-paper-question-bank/',
+                onlineQB: 'https://hksiiiqepasspaper.online/product/hksip6eonline/?lang=en',
+                bible: 'https://2cexam.com.hk/hk/hksi-le-paper-6-pass-paper-bible/',
+                hasBible: true
+            },
+            '7': {
+                printedQB: 'https://2cexam.com.hk/hk/hksi-le-paper-7-pass-paper-question-bank/',
+                onlineQB: 'https://hksiiiqepasspaper.online/product/hksip7eonline/?lang=en',
+                bible: 'https://2cexam.com.hk/hk/hksi-le-paper-7-pass-paper-bible/',
+                hasBible: true
+            },
+            '8': {
+                printedQB: 'https://2cexam.com.hk/hk/hksi-le-paper-8-pass-paper-question-bank/',
+                onlineQB: 'https://hksiiiqepasspaper.online/product/hksip8eonline/?lang=en',
+                bible: 'https://2cexam.com.hk/hk/hksi-le-paper-8-pass-paper-bible/',
+                hasBible: true
+            },
+            '9': {
+                printedQB: 'https://2cexam.com.hk/hk/hksi-le-paper-9-pass-paper-question-bank/',
+                onlineQB: 'https://hksiiiqepasspaper.online/product/hksip9eonline/?lang=en',
+                hasBible: false
+            },
+            '12': {
+                printedQB: 'https://2cexam.com.hk/hksi-le-paper-12-pass-paper-question-bank/',
+                onlineQB: 'https://hksiiiqepasspaper.online/product/hksip12eonline/?lang=en',
+                bible: 'https://2cexam.com.hk/hk/hksi-le-paper-12-pass-paper-bible/',
+                hasBible: true
+            }
+        };
+
+        // Product text translations
+        const productTexts = {
+            en: {
+                title: '📚 Study Materials from 2CExam',
+                subtitle: 'Get our exam preparation materials with 100% Money-Back Guarantee!',
+                paperTitle: 'Paper',
+                printedQB: '📖 Printed Question Bank',
+                onlineQB: '💻 Online Question Bank',
+                bible: '📕 Study Bible (Chinese)',
+                moneyback: '💯 Money-Back Guarantee',
+                pricing: '💼 Pricing',
+                priceEN: 'English version: HK$2,500/book',
+                priceCN: 'Chinese version: HK$1,500/book',
+                payment: '💳 Payment Methods',
+                payOnline: 'Online: Credit Card / PayPal',
+                payOffice: 'Office: Cash / FPS / Alipay / Cheque',
+                delivery: '🚚 Delivery',
+                deliveryOnline: 'Online versions: Instant access',
+                deliveryPrint: 'Printed versions: SF Express or pickup',
+                cta: '🎓 Need tutoring? Contact us!',
+                buyNow: 'Buy Now'
+            },
+            tc: {
+                title: '📚 2CExam 考試溫習材料',
+                subtitle: '我們的考試準備材料享有100%退款保證！',
+                paperTitle: '卷',
+                printedQB: '📖 實體版模擬試題',
+                onlineQB: '💻 網上版模擬試題',
+                bible: '📕 天書（中文）',
+                moneyback: '💯 退款保證',
+                pricing: '💼 價格',
+                priceEN: '英文版：HK$2,500/本',
+                priceCN: '中文版：HK$1,500/本',
+                payment: '💳 付款方式',
+                payOnline: '網上購買：信用卡 / PayPal',
+                payOffice: '門市購買：現金 / 轉數快 / 支付寶 / 支票',
+                delivery: '🚚 配送方式',
+                deliveryOnline: '網上版：成功購買後即時開通',
+                deliveryPrint: '實體版：順豐速遞或門市自取',
+                cta: '🎓 需要私人補習？歡迎聯繫我們！',
+                buyNow: '立即購買'
+            },
+            sc: {
+                title: '📚 2CExam 考试温习材料',
+                subtitle: '我们的考试准备材料享有100%退款保证！',
+                paperTitle: '卷',
+                printedQB: '📖 实体版模拟试题',
+                onlineQB: '💻 网上版模拟试题',
+                bible: '📕 天书（中文）',
+                moneyback: '💯 退款保证',
+                pricing: '💼 价格',
+                priceEN: '英文版：HK$2,500/本',
+                priceCN: '中文版：HK$1,500/本',
+                payment: '💳 付款方式',
+                payOnline: '网上购买：信用卡 / PayPal',
+                payOffice: '门店购买：现金 / 转数快 / 支付宝 / 支票',
+                delivery: '🚚 配送方式',
+                deliveryOnline: '网上版：成功购买后即时开通',
+                deliveryPrint: '实体版：顺丰速递或门店自取',
+                cta: '🎓 需要私人补习？欢迎联系我们！',
+                buyNow: '立即购买'
+            }
+        };
+
+        // SFC Information translations
+        const sfcTexts = {
+            en: {
+                sfcTitle: '📋 SFC Licensing Information',
+                guidelinesTitle: 'Guidelines on Competence',
+                guidelinesDesc: 'The SFC Guidelines on Competence (October 2024) set out the competence requirements for licensed representatives and responsible officers.',
+                guidelinesLink: 'https://www.sfc.hk/en/rules-and-standards/codes-and-guidelines/guidelines/guidelines-on-competence',
+                viewGuidelines: 'View Official Guidelines',
+                contactTitle: '📞 Contact SFC Licensing Department',
+                address: 'Securities and Futures Commission\n54/F, One Island East\n18 Westlands Road, Quarry Bay\nHong Kong',
+                hotline: 'Licensing Hotline: (852) 2231 1222',
+                fax: 'Fax: (852) 2521 7836',
+                email: 'Email: licensing@sfc.hk',
+                website: 'Website: www.sfc.hk',
+                hours: 'Office Hours: Mon-Fri 9:00am - 5:30pm',
+                enquiry: 'Online Licensing Enquiry',
+                enquiryLink: 'https://www.sfc.hk/en/faqs/licensing-enquiries'
+            },
+            tc: {
+                sfcTitle: '📋 證監會發牌資訊',
+                guidelinesTitle: '勝任能力的指引',
+                guidelinesDesc: '證監會《勝任能力的指引》(2024年10月) 列明持牌代表及負責人員的勝任能力要求。',
+                guidelinesLink: 'https://www.sfc.hk/TC/rules-and-standards/codes-and-guidelines/guidelines/guidelines-on-competence',
+                viewGuidelines: '查看官方指引',
+                contactTitle: '📞 聯繫證監會發牌科',
+                address: '證券及期貨事務監察委員會\n香港鰂魚涌華蘭路18號\n港島東中心54樓',
+                hotline: '發牌熱線：(852) 2231 1222',
+                fax: '傳真：(852) 2521 7836',
+                email: '電郵：licensing@sfc.hk',
+                website: '網址：www.sfc.hk',
+                hours: '辦公時間：星期一至五 上午9時至下午5時30分',
+                enquiry: '網上發牌查詢',
+                enquiryLink: 'https://www.sfc.hk/TC/faqs/licensing-enquiries'
+            },
+            sc: {
+                sfcTitle: '📋 证监会发牌资讯',
+                guidelinesTitle: '胜任能力的指引',
+                guidelinesDesc: '证监会《胜任能力的指引》(2024年10月) 列明持牌代表及负责人员的胜任能力要求。',
+                guidelinesLink: 'https://www.sfc.hk/TC/rules-and-standards/codes-and-guidelines/guidelines/guidelines-on-competence',
+                viewGuidelines: '查看官方指引',
+                contactTitle: '📞 联系证监会发牌科',
+                address: '证券及期货事务监察委员会\n香港�的鱼涌华兰路18号\n港岛东中心54楼',
+                hotline: '发牌热线：(852) 2231 1222',
+                fax: '传真：(852) 2521 7836',
+                email: '电邮：licensing@sfc.hk',
+                website: '网址：www.sfc.hk',
+                hours: '办公时间：星期一至五 上午9时至下午5时30分',
+                enquiry: '网上发牌查询',
+                enquiryLink: 'https://www.sfc.hk/TC/faqs/licensing-enquiries'
+            }
+        };
+
+        function generateProductRecommendations(requiredPapers) {
+            if (requiredPapers.length === 0) return '';
+
+            const pt = productTexts[lang];
+            const pn = paperNames[lang];
+            let html = `<div class="card" style="border:2px solid var(--primary);margin-top:20px;">
+                <div class="card-header" style="background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);color:white;">
+                    <h2 style="color:white;">${pt.title}</h2>
+                    <p style="color:rgba(255,255,255,0.9);">${pt.subtitle}</p>
+                </div>
+                <div class="card-body">`;
+
+            requiredPapers.forEach(paper => {
+                const p = products[paper.p];
+                if (!p) return;
+
+                html += `<div style="background:var(--gray-100);border-radius:8px;padding:15px;margin-bottom:15px;">
+                    <h4 style="color:var(--primary);margin-bottom:10px;">${pt.paperTitle} ${paper.p} - ${pn[paper.p]?.split(' - ')[1] || ''}</h4>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+                        <a href="${p.printedQB}" target="_blank" class="btn btn-primary" style="text-decoration:none;text-align:center;font-size:0.85rem;">
+                            ${pt.printedQB}<br><small>${pt.moneyback}</small>
+                        </a>
+                        <a href="${p.onlineQB}" target="_blank" class="btn btn-secondary" style="text-decoration:none;text-align:center;font-size:0.85rem;">
+                            ${pt.onlineQB}
+                        </a>
+                        ${p.hasBible ? `<a href="${p.bible}" target="_blank" class="btn btn-secondary" style="text-decoration:none;text-align:center;font-size:0.85rem;">
+                            ${pt.bible}<br><small>${pt.moneyback}</small>
+                        </a>` : ''}
+                    </div>
+                </div>`;
+            });
+
+            html += `<div style="background:#fff8e1;border-radius:8px;padding:15px;margin-top:15px;">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;">
+                    <div>
+                        <strong>${pt.pricing}</strong><br>
+                        <small>• ${pt.priceEN}<br>• ${pt.priceCN}</small>
+                    </div>
+                    <div>
+                        <strong>${pt.payment}</strong><br>
+                        <small>• ${pt.payOnline}<br>• ${pt.payOffice}</small>
+                    </div>
+                    <div>
+                        <strong>${pt.delivery}</strong><br>
+                        <small>• ${pt.deliveryOnline}<br>• ${pt.deliveryPrint}</small>
+                    </div>
+                </div>
+                <p style="margin-top:15px;text-align:center;font-weight:600;color:var(--primary);">${pt.cta}</p>
+            </div>`;
+
+            html += '</div></div>';
+            return html;
+        }
+
+        function generateSFCInfo() {
+            const st = sfcTexts[lang];
+            return `<div class="card" style="margin-top:20px;">
+                <div class="card-header" style="background:#1a237e;color:white;">
+                    <h2 style="color:white;">${st.sfcTitle}</h2>
+                </div>
+                <div class="card-body">
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+                        <div>
+                            <h4 style="color:var(--secondary);margin-bottom:10px;">📖 ${st.guidelinesTitle}</h4>
+                            <p style="font-size:0.9rem;color:var(--gray-600);margin-bottom:15px;">${st.guidelinesDesc}</p>
+                            <a href="${st.guidelinesLink}" target="_blank" class="btn btn-primary" style="text-decoration:none;">
+                                ${st.viewGuidelines} →
+                            </a>
+                        </div>
+                        <div>
+                            <h4 style="color:var(--secondary);margin-bottom:10px;">${st.contactTitle}</h4>
+                            <div style="font-size:0.85rem;line-height:1.8;">
+                                <p style="white-space:pre-line;">📍 ${st.address}</p>
+                                <p>📞 ${st.hotline}</p>
+                                <p>📠 ${st.fax}</p>
+                                <p>✉️ ${st.email}</p>
+                                <p>🌐 ${st.website}</p>
+                                <p>🕐 ${st.hours}</p>
+                            </div>
+                            <a href="${st.enquiryLink}" target="_blank" class="btn btn-secondary" style="text-decoration:none;margin-top:10px;">
+                                ${st.enquiry} →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
         function calculate() {
             const t = texts[lang];
             const role = document.querySelector('input[name="role"]:checked')?.value || 'LR';
@@ -831,7 +1090,15 @@
                     <p><strong>${t.papers_exempt_count}</strong> <span style="color:#28a745;font-weight:700;">${exempt.length}</span></p>
                     ${cptHours ? `<p><strong>${lang === 'en' ? 'CPT Hours:' : 'CPT時數：'}</strong> <span style="color:#ffc107;font-weight:700;">${cptHours}</span></p>` : ''}
                 </div></div>`;
+
+                // Add product recommendations if there are required papers
+                if (required.length > 0) {
+                    html += generateProductRecommendations(required);
+                }
             }
+
+            // Always add SFC information
+            html += generateSFCInfo();
 
             document.getElementById('resultsContent').innerHTML = html;
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
