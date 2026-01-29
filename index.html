@@ -192,17 +192,17 @@
                         <div class="form-group">
                             <label id="ra_label">哪種受規管活動 (RA)？</label>
                             <div class="option-grid">
-                                <label class="option-card"><input type="radio" name="raType" value="1"><div class="option-content"><span class="option-type">第1類</span><span class="option-name" id="ra1">證券交易</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="2"><div class="option-content"><span class="option-type">第2類</span><span class="option-name" id="ra2">期貨合約交易</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="3"><div class="option-content"><span class="option-type">第3類</span><span class="option-name" id="ra3">槓桿式外匯交易</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="4"><div class="option-content"><span class="option-type">第4類</span><span class="option-name" id="ra4">就證券提供意見</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="5"><div class="option-content"><span class="option-type">第5類</span><span class="option-name" id="ra5">就期貨合約提供意見</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="6"><div class="option-content"><span class="option-type">第6類</span><span class="option-name" id="ra6">就機構融資提供意見</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="7"><div class="option-content"><span class="option-type">第7類</span><span class="option-name" id="ra7">提供自動化交易服務</span><span class="option-badge" id="no_exam">無須考試</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="8"><div class="option-content"><span class="option-type">第8類</span><span class="option-name" id="ra8">提供證券保證金融資</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="9"><div class="option-content"><span class="option-type">第9類</span><span class="option-name" id="ra9">資產管理</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="10"><div class="option-content"><span class="option-type">第10類</span><span class="option-name" id="ra10">提供信貸評級服務</span></div></label>
-                                <label class="option-card"><input type="radio" name="raType" value="13"><div class="option-content"><span class="option-type">第13類</span><span class="option-name" id="ra13">為集體投資計劃提供存管服務</span><span class="option-badge new" id="new_2024">2024新增</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="1"><div class="option-content"><span class="option-type" id="type1">第1類</span><span class="option-name" id="ra1">證券交易</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="2"><div class="option-content"><span class="option-type" id="type2">第2類</span><span class="option-name" id="ra2">期貨合約交易</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="3"><div class="option-content"><span class="option-type" id="type3">第3類</span><span class="option-name" id="ra3">槓桿式外匯交易</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="4"><div class="option-content"><span class="option-type" id="type4">第4類</span><span class="option-name" id="ra4">就證券提供意見</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="5"><div class="option-content"><span class="option-type" id="type5">第5類</span><span class="option-name" id="ra5">就期貨合約提供意見</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="6"><div class="option-content"><span class="option-type" id="type6">第6類</span><span class="option-name" id="ra6">就機構融資提供意見</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="7"><div class="option-content"><span class="option-type" id="type7">第7類</span><span class="option-name" id="ra7">提供自動化交易服務</span><span class="option-badge" id="no_exam">無須考試</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="8"><div class="option-content"><span class="option-type" id="type8">第8類</span><span class="option-name" id="ra8">提供證券保證金融資</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="9"><div class="option-content"><span class="option-type" id="type9">第9類</span><span class="option-name" id="ra9">資產管理</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="10"><div class="option-content"><span class="option-type" id="type10">第10類</span><span class="option-name" id="ra10">提供信貸評級服務</span></div></label>
+                                <label class="option-card"><input type="radio" name="raType" value="13"><div class="option-content"><span class="option-type" id="type13">第13類</span><span class="option-name" id="ra13">為集體投資計劃提供存管服務</span><span class="option-badge new" id="new_2024">2024新增</span></div></label>
                             </div>
                         </div>
                     </div>
@@ -447,6 +447,8 @@
                 role_lr: "Licensed Representative (LR)",
                 role_ro: "Responsible Officer (RO)",
                 ra_label: "Which Regulated Activity (RA)?",
+                type1: "Type 1", type2: "Type 2", type3: "Type 3", type4: "Type 4", type5: "Type 5",
+                type6: "Type 6", type7: "Type 7", type8: "Type 8", type9: "Type 9", type10: "Type 10", type13: "Type 13",
                 ra1: "Dealing in Securities", ra2: "Dealing in Futures", ra3: "Leveraged FX Trading",
                 ra4: "Advising on Securities", ra5: "Advising on Futures", ra6: "Corporate Finance",
                 ra7: "Automated Trading", ra8: "Margin Financing", ra9: "Asset Management",
@@ -517,6 +519,8 @@
                 role_lr: "持牌代表 (LR)",
                 role_ro: "負責人員 (RO)",
                 ra_label: "哪種受規管活動 (RA)？",
+                type1: "第1類", type2: "第2類", type3: "第3類", type4: "第4類", type5: "第5類",
+                type6: "第6類", type7: "第7類", type8: "第8類", type9: "第9類", type10: "第10類", type13: "第13類",
                 ra1: "證券交易", ra2: "期貨合約交易", ra3: "槓桿式外匯交易",
                 ra4: "就證券提供意見", ra5: "就期貨合約提供意見", ra6: "就機構融資提供意見",
                 ra7: "提供自動化交易服務", ra8: "提供證券保證金融資", ra9: "資產管理",
@@ -587,6 +591,8 @@
                 role_lr: "持牌代表 (LR)",
                 role_ro: "负责人员 (RO)",
                 ra_label: "哪种受规管活动 (RA)？",
+                type1: "第1类", type2: "第2类", type3: "第3类", type4: "第4类", type5: "第5类",
+                type6: "第6类", type7: "第7类", type8: "第8类", type9: "第9类", type10: "第10类", type13: "第13类",
                 ra1: "证券交易", ra2: "期货合约交易", ra3: "杠杆式外汇交易",
                 ra4: "就证券提供意见", ra5: "就期货合约提供意见", ra6: "就机构融资提供意见",
                 ra7: "提供自动化交易服务", ra8: "提供证券保证金融资", ra9: "资产管理",
