@@ -779,6 +779,7 @@
                 onlineQB: '💻 Online Question Bank',
                 bible: '📕 Study Bible (Chinese)',
                 moneyback: '💯 Money-Back Guarantee',
+                instantAccess: '⚡ Instant Access',
                 pricing: '💼 Pricing',
                 priceEN: 'English version: HK$2,500/book',
                 priceCN: 'Chinese version: HK$1,500/book',
@@ -799,6 +800,7 @@
                 onlineQB: '💻 網上版模擬試題',
                 bible: '📕 天書（中文）',
                 moneyback: '💯 退款保證',
+                instantAccess: '⚡ 即時開通',
                 pricing: '💼 價格',
                 priceEN: '英文版：HK$2,500/本',
                 priceCN: '中文版：HK$1,500/本',
@@ -819,6 +821,7 @@
                 onlineQB: '💻 网上版模拟试题',
                 bible: '📕 天书（中文）',
                 moneyback: '💯 退款保证',
+                instantAccess: '⚡ 即时开通',
                 pricing: '💼 价格',
                 priceEN: '英文版：HK$2,500/本',
                 priceCN: '中文版：HK$1,500/本',
@@ -908,9 +911,9 @@
                             ${pt.printedQB}<br><small>${pt.moneyback}</small>
                         </a>
                         <a href="${p.onlineQB}" target="_blank" class="btn btn-secondary" style="text-decoration:none;text-align:center;font-size:0.85rem;">
-                            ${pt.onlineQB}
+                            ${pt.onlineQB}<br><small>${pt.instantAccess}</small>
                         </a>
-                        ${p.hasBible ? `<a href="${p.bible}" target="_blank" class="btn btn-secondary" style="text-decoration:none;text-align:center;font-size:0.85rem;">
+                        ${p.hasBible ? `<a href="${p.bible}" target="_blank" class="btn btn-primary" style="text-decoration:none;text-align:center;font-size:0.85rem;">
                             ${pt.bible}<br><small>${pt.moneyback}</small>
                         </a>` : ''}
                     </div>
