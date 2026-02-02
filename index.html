@@ -91,6 +91,33 @@
         .checkbox-item:hover { border-color: var(--gray-600); }
         .checkbox-item input { width: 16px; height: 16px; accent-color: var(--primary); }
 
+        /* License with Role Selection */
+        .license-grid { display: flex; flex-direction: column; gap: 8px; }
+        .license-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: white; border: 2px solid var(--gray-300); border-radius: 6px; flex-wrap: wrap; }
+        .license-row:hover { border-color: var(--gray-600); }
+        .license-row.selected { border-color: var(--primary); background: #fff5f5; }
+        .license-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
+        .license-row .ra-label { font-size: 0.85rem; font-weight: 500; min-width: 55px; cursor: pointer; }
+        .role-toggle { display: none; margin-left: auto; gap: 5px; align-items: center; }
+        .license-row.selected .role-toggle { display: flex; }
+        .role-toggle label { display: flex; align-items: center; gap: 3px; padding: 4px 10px; background: var(--gray-100); border: 1px solid var(--gray-300); border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: 500; transition: all 0.2s; }
+        .role-toggle input { display: none; }
+        .role-toggle input:checked + span { background: var(--primary); color: white; }
+        .role-toggle label:has(input:checked) { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Conditional Fields */
+        .conditional-field { margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid var(--primary); }
+        .conditional-field.hidden { display: none; }
+        .field-row { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; flex-wrap: wrap; }
+        .field-row:last-child { margin-bottom: 0; }
+        .field-row label { font-weight: 500; font-size: 0.9rem; min-width: 200px; }
+        .field-row input[type="number"] { width: 80px; padding: 8px; border: 2px solid var(--gray-300); border-radius: 6px; font-size: 0.9rem; }
+        .field-row .unit { color: var(--gray-600); font-size: 0.85rem; }
+        .mini-toggle { display: flex; gap: 5px; }
+        .mini-toggle label { padding: 6px 12px; background: white; border: 1px solid var(--gray-300); border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+        .mini-toggle input { display: none; }
+        .mini-toggle label:has(input:checked) { background: var(--primary); color: white; border-color: var(--primary); }
+
         /* Info Box */
         .info-box { display: flex; gap: 10px; padding: 12px; background: #e3f2fd; border-radius: 8px; margin-top: 15px; border-left: 4px solid #2196f3; }
         .info-box.warning { background: #fff8e1; border-left-color: var(--warning); }
@@ -230,16 +257,79 @@
                         </div>
                         <div class="form-group" id="currentRAGroup" style="display:none;">
                             <label id="current_ra_label">目前持有的牌照：</label>
-                            <div class="checkbox-grid">
-                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="1"><span>第1類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="2"><span>第2類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="4"><span>第4類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="5"><span>第5類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="6"><span>第6類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="8"><span>第8類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="9"><span>第9類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="10"><span>第10類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="currentRA" value="13"><span>第13類</span></label>
+                            <div class="license-grid" id="currentLicenseGrid">
+                                <div class="license-row" data-ra="1">
+                                    <input type="checkbox" name="currentRA" value="1" id="currentRA1">
+                                    <span class="ra-label" id="curr_type1">第1類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="currentRole1" value="LR" checked><span id="curr_lr1">LR</span></label>
+                                        <label><input type="radio" name="currentRole1" value="RO"><span id="curr_ro1">RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="2">
+                                    <input type="checkbox" name="currentRA" value="2" id="currentRA2">
+                                    <span class="ra-label" id="curr_type2">第2類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="currentRole2" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="currentRole2" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="4">
+                                    <input type="checkbox" name="currentRA" value="4" id="currentRA4">
+                                    <span class="ra-label" id="curr_type4">第4類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="currentRole4" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="currentRole4" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="5">
+                                    <input type="checkbox" name="currentRA" value="5" id="currentRA5">
+                                    <span class="ra-label" id="curr_type5">第5類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="currentRole5" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="currentRole5" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="6">
+                                    <input type="checkbox" name="currentRA" value="6" id="currentRA6">
+                                    <span class="ra-label" id="curr_type6">第6類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="currentRole6" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="currentRole6" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="8">
+                                    <input type="checkbox" name="currentRA" value="8" id="currentRA8">
+                                    <span class="ra-label" id="curr_type8">第8類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="currentRole8" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="currentRole8" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="9">
+                                    <input type="checkbox" name="currentRA" value="9" id="currentRA9">
+                                    <span class="ra-label" id="curr_type9">第9類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="currentRole9" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="currentRole9" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="10">
+                                    <input type="checkbox" name="currentRA" value="10" id="currentRA10">
+                                    <span class="ra-label" id="curr_type10">第10類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="currentRole10" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="currentRole10" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="13">
+                                    <input type="checkbox" name="currentRA" value="13" id="currentRA13">
+                                    <span class="ra-label" id="curr_type13">第13類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="currentRole13" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="currentRole13" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group" id="formerGroup">
@@ -259,16 +349,104 @@
                         </div>
                         <div class="form-group" id="formerRAGroup" style="display:none;">
                             <label id="former_ra_label">過去持有的牌照：</label>
-                            <div class="checkbox-grid">
-                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="1"><span>第1類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="2"><span>第2類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="4"><span>第4類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="5"><span>第5類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="6"><span>第6類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="8"><span>第8類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="9"><span>第9類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="10"><span>第10類</span></label>
-                                <label class="checkbox-item"><input type="checkbox" name="formerRA" value="13"><span>第13類</span></label>
+                            <div class="license-grid" id="formerLicenseGrid">
+                                <div class="license-row" data-ra="1">
+                                    <input type="checkbox" name="formerRA" value="1" id="formerRA1">
+                                    <span class="ra-label" id="former_type1">第1類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="formerRole1" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="formerRole1" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="2">
+                                    <input type="checkbox" name="formerRA" value="2" id="formerRA2">
+                                    <span class="ra-label" id="former_type2">第2類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="formerRole2" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="formerRole2" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="4">
+                                    <input type="checkbox" name="formerRA" value="4" id="formerRA4">
+                                    <span class="ra-label" id="former_type4">第4類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="formerRole4" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="formerRole4" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="5">
+                                    <input type="checkbox" name="formerRA" value="5" id="formerRA5">
+                                    <span class="ra-label" id="former_type5">第5類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="formerRole5" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="formerRole5" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="6">
+                                    <input type="checkbox" name="formerRA" value="6" id="formerRA6">
+                                    <span class="ra-label" id="former_type6">第6類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="formerRole6" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="formerRole6" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="8">
+                                    <input type="checkbox" name="formerRA" value="8" id="formerRA8">
+                                    <span class="ra-label" id="former_type8">第8類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="formerRole8" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="formerRole8" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="9">
+                                    <input type="checkbox" name="formerRA" value="9" id="formerRA9">
+                                    <span class="ra-label" id="former_type9">第9類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="formerRole9" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="formerRole9" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="10">
+                                    <input type="checkbox" name="formerRA" value="10" id="formerRA10">
+                                    <span class="ra-label" id="former_type10">第10類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="formerRole10" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="formerRole10" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                                <div class="license-row" data-ra="13">
+                                    <input type="checkbox" name="formerRA" value="13" id="formerRA13">
+                                    <span class="ra-label" id="former_type13">第13類</span>
+                                    <div class="role-toggle">
+                                        <label><input type="radio" name="formerRole13" value="LR" checked><span>LR</span></label>
+                                        <label><input type="radio" name="formerRole13" value="RO"><span>RO</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Step 2 Fields for Conditional Exemptions -->
+                        <div class="form-group" id="additionalLicenseFields">
+                            <div class="conditional-field">
+                                <div class="field-row">
+                                    <label id="temp_licence_label">申請臨時牌照？</label>
+                                    <div class="mini-toggle">
+                                        <label><input type="radio" name="tempLicence" value="yes"><span id="temp_yes">是</span></label>
+                                        <label><input type="radio" name="tempLicence" value="no" checked><span id="temp_no">否</span></label>
+                                    </div>
+                                </div>
+                                <div class="field-row" id="neverAttemptedP1Row" style="display:none;">
+                                    <label id="never_p1_label">從未嘗試過卷一考試？</label>
+                                    <div class="mini-toggle">
+                                        <label><input type="radio" name="neverAttemptedP1" value="yes"><span id="never_p1_yes">是</span></label>
+                                        <label><input type="radio" name="neverAttemptedP1" value="no" checked><span id="never_p1_no">否</span></label>
+                                    </div>
+                                </div>
+                                <div class="field-row">
+                                    <label id="licensed_hk_exp_label">持牌香港經驗：</label>
+                                    <input type="number" id="licensedHKExp" min="0" max="30" step="0.5" value="0">
+                                    <span class="unit" id="years_unit5">年</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -338,6 +516,53 @@
                             <div class="toggle-grid">
                                 <label class="toggle-card"><input type="radio" name="piOnly" value="yes"><div class="toggle-content"><strong id="yes3">是</strong></div></label>
                                 <label class="toggle-card"><input type="radio" name="piOnly" value="no" checked><div class="toggle-content"><strong id="no3">否</strong></div></label>
+                            </div>
+                        </div>
+
+                        <!-- Additional Fields for Conditional Exemptions (RO) -->
+                        <div class="form-group" id="roConditionalFields">
+                            <div class="conditional-field">
+                                <p style="font-weight:600;margin-bottom:15px;color:var(--secondary);" id="ro_conditional_title">負責人員有條件豁免相關資料：</p>
+                                <div class="field-row">
+                                    <label id="schedule3_exp_label">附表3認可交易所司法管轄區經驗：</label>
+                                    <input type="number" id="schedule3Exp" min="0" max="30" step="0.5" value="0">
+                                    <span class="unit" id="years_unit6">年</span>
+                                </div>
+                                <div class="field-row">
+                                    <label id="regulatory_work_label">過去6年內全職監管/合規工作滿3年？</label>
+                                    <div class="mini-toggle">
+                                        <label><input type="radio" name="regulatoryWork" value="yes"><span id="reg_yes">是</span></label>
+                                        <label><input type="radio" name="regulatoryWork" value="no" checked><span id="reg_no">否</span></label>
+                                    </div>
+                                </div>
+                                <div class="field-row">
+                                    <label id="limited_scope_label">有限範圍活動/高級管理人員角色？</label>
+                                    <div class="mini-toggle">
+                                        <label><input type="radio" name="limitedScope" value="yes"><span id="scope_yes">是</span></label>
+                                        <label><input type="radio" name="limitedScope" value="no" checked><span id="scope_no">否</span></label>
+                                    </div>
+                                </div>
+                                <div class="field-row">
+                                    <label id="ro_support_label">獲指定負責人員監管支援？</label>
+                                    <div class="mini-toggle">
+                                        <label><input type="radio" name="roSupport" value="yes"><span id="support_yes">是</span></label>
+                                        <label><input type="radio" name="roSupport" value="no" checked><span id="support_no">否</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Fields for Conditional Exemptions (LR) -->
+                        <div class="form-group" id="lrConditionalFields">
+                            <div class="conditional-field">
+                                <p style="font-weight:600;margin-bottom:15px;color:var(--secondary);" id="lr_conditional_title">持牌代表有條件豁免相關資料：</p>
+                                <div class="field-row">
+                                    <label id="itinerant_label">巡迴專業人士（每年在港少於30天）？</label>
+                                    <div class="mini-toggle">
+                                        <label><input type="radio" name="itinerant" value="yes"><span id="itin_yes">是</span></label>
+                                        <label><input type="radio" name="itinerant" value="no" checked><span id="itin_no">否</span></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -508,7 +733,45 @@
                 mtr_text: "Central MTR Exit B",
                 hours_title: "Office Hours",
                 hours_days: "Mon-Fri: 9AM-12PM, 1PM-6PM",
-                hours_lunch: "(No service during lunch)"
+                hours_lunch: "(No service during lunch)",
+                // New fields for enhanced exemption logic
+                temp_licence_label: "Applying for Temporary Licence?",
+                temp_yes: "Yes", temp_no: "No",
+                never_p1_label: "Never attempted Paper 1?",
+                never_p1_yes: "Yes", never_p1_no: "No",
+                licensed_hk_exp_label: "Licensed HK Experience:",
+                years_unit5: "years", years_unit6: "years",
+                ro_conditional_title: "RO Conditional Exemption Information:",
+                schedule3_exp_label: "Experience in Schedule 3 Exchange Jurisdictions:",
+                regulatory_work_label: "3+ years full-time regulatory/compliance work in past 6 years?",
+                reg_yes: "Yes", reg_no: "No",
+                limited_scope_label: "Limited Scope Activities / Senior Management Role?",
+                scope_yes: "Yes", scope_no: "No",
+                ro_support_label: "Has Regulatory Support from Designated RO?",
+                support_yes: "Yes", support_no: "No",
+                lr_conditional_title: "LR Conditional Exemption Information:",
+                itinerant_label: "Itinerant Professional (less than 30 days/year in HK)?",
+                itin_yes: "Yes", itin_no: "No",
+                // Exemption result translations
+                exempt_full: "Full Exemption",
+                exempt_conditional: "Conditional Exemption",
+                exempt_reentrant: "Re-entrant Exemption",
+                conditions_title: "Conditions:",
+                cpt_additional: "Additional CPT Requirements",
+                same_riq_same_role: "Same RIQ requirements, same role",
+                same_lrp_same_role: "Same LRP requirements, same role",
+                different_riq_exp: "Different RIQ requirements, 5+ years experience",
+                lr_to_ro_upgrade: "LR to RO upgrade with licensed HK experience",
+                foreign_exp_pi: "8+ years foreign experience (Schedule 3), PI only",
+                itinerant_exemption: "Itinerant professional exemption",
+                temp_licence_exemption: "Temporary licence",
+                regulatory_work_exemption: "3+ years regulatory/compliance work in HK",
+                condition_cpt_5_industry: "+5 CPT hours in industry/product knowledge (one-off)",
+                condition_cpt_5_regulatory: "+5 CPT hours in local regulatory knowledge (one-off)",
+                condition_licensing_conditions: "Licensing conditions may apply",
+                condition_limited_scope: "Limited scope activities only",
+                condition_ro_supervision: "Under designated RO supervision",
+                condition_pi_only: "Professional investors only"
             },
             tc: {
                 title: "證監會考試及資格檢查器",
@@ -580,7 +843,45 @@
                 mtr_text: "中環地鐵站B出口",
                 hours_title: "辦公時間",
                 hours_days: "星期一至五: 9AM-12PM, 1PM-6PM",
-                hours_lunch: "（午飯時間不提供服務）"
+                hours_lunch: "（午飯時間不提供服務）",
+                // New fields for enhanced exemption logic
+                temp_licence_label: "申請臨時牌照？",
+                temp_yes: "是", temp_no: "否",
+                never_p1_label: "從未嘗試過卷一考試？",
+                never_p1_yes: "是", never_p1_no: "否",
+                licensed_hk_exp_label: "持牌香港經驗：",
+                years_unit5: "年", years_unit6: "年",
+                ro_conditional_title: "負責人員有條件豁免相關資料：",
+                schedule3_exp_label: "附表3認可交易所司法管轄區經驗：",
+                regulatory_work_label: "過去6年內全職監管/合規工作滿3年？",
+                reg_yes: "是", reg_no: "否",
+                limited_scope_label: "有限範圍活動/高級管理人員角色？",
+                scope_yes: "是", scope_no: "否",
+                ro_support_label: "獲指定負責人員監管支援？",
+                support_yes: "是", support_no: "否",
+                lr_conditional_title: "持牌代表有條件豁免相關資料：",
+                itinerant_label: "巡迴專業人士（每年在港少於30天）？",
+                itin_yes: "是", itin_no: "否",
+                // Exemption result translations
+                exempt_full: "完全豁免",
+                exempt_conditional: "有條件豁免",
+                exempt_reentrant: "重返業界豁免",
+                conditions_title: "條件：",
+                cpt_additional: "額外CPT要求",
+                same_riq_same_role: "相同RIQ要求、相同角色",
+                same_lrp_same_role: "相同LRP要求、相同角色",
+                different_riq_exp: "不同RIQ要求、5年以上經驗",
+                lr_to_ro_upgrade: "LR升級RO，具持牌香港經驗",
+                foreign_exp_pi: "8年以上海外經驗（附表3），僅限專業投資者",
+                itinerant_exemption: "巡迴專業人士豁免",
+                temp_licence_exemption: "臨時牌照",
+                regulatory_work_exemption: "3年以上香港監管/合規工作",
+                condition_cpt_5_industry: "一次性+5 CPT小時（行業/產品知識）",
+                condition_cpt_5_regulatory: "一次性+5 CPT小時（本地監管知識）",
+                condition_licensing_conditions: "可能附帶牌照條件",
+                condition_limited_scope: "僅限有限範圍活動",
+                condition_ro_supervision: "受指定負責人員監督",
+                condition_pi_only: "僅限專業投資者"
             },
             sc: {
                 title: "证监会考试及资格检查器",
@@ -652,7 +953,45 @@
                 mtr_text: "中环地铁站B出口",
                 hours_title: "办公时间",
                 hours_days: "星期一至五: 9AM-12PM, 1PM-6PM",
-                hours_lunch: "（午饭时间不提供服务）"
+                hours_lunch: "（午饭时间不提供服务）",
+                // New fields for enhanced exemption logic
+                temp_licence_label: "申请临时牌照？",
+                temp_yes: "是", temp_no: "否",
+                never_p1_label: "从未尝试过卷一考试？",
+                never_p1_yes: "是", never_p1_no: "否",
+                licensed_hk_exp_label: "持牌香港经验：",
+                years_unit5: "年", years_unit6: "年",
+                ro_conditional_title: "负责人员有条件豁免相关资料：",
+                schedule3_exp_label: "附表3认可交易所司法管辖区经验：",
+                regulatory_work_label: "过去6年内全职监管/合规工作满3年？",
+                reg_yes: "是", reg_no: "否",
+                limited_scope_label: "有限范围活动/高级管理人员角色？",
+                scope_yes: "是", scope_no: "否",
+                ro_support_label: "获指定负责人员监管支援？",
+                support_yes: "是", support_no: "否",
+                lr_conditional_title: "持牌代表有条件豁免相关资料：",
+                itinerant_label: "巡回专业人士（每年在港少于30天）？",
+                itin_yes: "是", itin_no: "否",
+                // Exemption result translations
+                exempt_full: "完全豁免",
+                exempt_conditional: "有条件豁免",
+                exempt_reentrant: "重返业界豁免",
+                conditions_title: "条件：",
+                cpt_additional: "额外CPT要求",
+                same_riq_same_role: "相同RIQ要求、相同角色",
+                same_lrp_same_role: "相同LRP要求、相同角色",
+                different_riq_exp: "不同RIQ要求、5年以上经验",
+                lr_to_ro_upgrade: "LR升级RO，具持牌香港经验",
+                foreign_exp_pi: "8年以上海外经验（附表3），仅限专业投资者",
+                itinerant_exemption: "巡回专业人士豁免",
+                temp_licence_exemption: "临时牌照",
+                regulatory_work_exemption: "3年以上香港监管/合规工作",
+                condition_cpt_5_industry: "一次性+5 CPT小时（行业/产品知识）",
+                condition_cpt_5_regulatory: "一次性+5 CPT小时（本地监管知识）",
+                condition_licensing_conditions: "可能附带牌照条件",
+                condition_limited_scope: "仅限有限范围活动",
+                condition_ro_supervision: "受指定负责人员监督",
+                condition_pi_only: "仅限专业投资者"
             }
         };
 
@@ -706,6 +1045,57 @@
             });
         });
 
+        // License checkbox event listeners for role toggle visibility
+        function setupLicenseRowListeners() {
+            document.querySelectorAll('.license-row input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const row = this.closest('.license-row');
+                    if (this.checked) {
+                        row.classList.add('selected');
+                    } else {
+                        row.classList.remove('selected');
+                    }
+                });
+                // Also handle clicking on the label
+                const row = cb.closest('.license-row');
+                const label = row.querySelector('.ra-label');
+                if (label) {
+                    label.addEventListener('click', function() {
+                        cb.checked = !cb.checked;
+                        cb.dispatchEvent(new Event('change'));
+                    });
+                }
+            });
+        }
+        setupLicenseRowListeners();
+
+        // Role selection event listeners - show/hide conditional fields based on role
+        document.querySelectorAll('input[name="role"]').forEach(r => {
+            r.addEventListener('change', function() {
+                const roFields = document.getElementById('roConditionalFields');
+                const lrFields = document.getElementById('lrConditionalFields');
+                if (this.value === 'RO') {
+                    if (roFields) roFields.style.display = 'block';
+                    if (lrFields) lrFields.style.display = 'none';
+                } else {
+                    if (roFields) roFields.style.display = 'none';
+                    if (lrFields) lrFields.style.display = 'block';
+                }
+            });
+        });
+
+        // Current license toggle - show/hide "never attempted Paper 1" based on current LR status
+        document.querySelectorAll('input[name="currentLicense"]').forEach(r => {
+            r.addEventListener('change', function() {
+                const neverP1Row = document.getElementById('neverAttemptedP1Row');
+                if (neverP1Row) {
+                    // Show "never attempted" only if currently licensed as LR
+                    const hasCurrentLicense = this.value === 'yes';
+                    neverP1Row.style.display = hasCurrentLicense ? 'flex' : 'none';
+                }
+            });
+        });
+
         // Paper names
         const paperNames = {
             en: { '1':'Paper 1 - Securities & Futures Regulation','2':'Paper 2 - Securities Regulation','3':'Paper 3 - Derivatives Regulation','4':'Paper 4 - Credit Rating Regulation','5':'Paper 5 - Corporate Finance Regulation','6':'Paper 6 - Asset Management Regulation','7':'Paper 7 - Financial Markets','8':'Paper 8 - Securities','9':'Paper 9 - Derivatives','10':'Paper 10 - Credit Rating','11':'Paper 11 - Corporate Finance','12':'Paper 12 - Asset Management','15':'Paper 15 - Sponsors (Principals)','16':'Paper 16 - Sponsors (Representatives)','17':'Paper 17 - Takeovers','18':'Paper 18 - Depositary Regulation','19':'Paper 19 - Depositary Services' },
@@ -719,6 +1109,365 @@
             LRP_LR: { '1':['1'],'2':['1'],'3':[],'4':['1'],'5':['1'],'6':['1'],'7':[],'8':['1'],'9':['1'],'10':['1'],'13':['1'] },
             LRP_RO: { '1':['1','2'],'2':['1','3'],'3':[],'4':['1','2'],'5':['1','3'],'6':['1','5'],'7':[],'8':['1','2'],'9':['1','6'],'10':['1','4'],'13':['1','18'] }
         };
+
+        // Same RIQ Requirements Groups (4.4.2.1)
+        // RAs in the same group share the same RIQ exam requirements
+        const sameRIQGroups = {
+            'securities': ['1', '4', '8'],     // Papers 7, 8
+            'derivatives': ['2', '5'],          // Papers 7, 9
+            'corpfin': ['6'],                   // Papers 7, 11
+            'assetmgmt': ['9'],                 // Papers 7, 12
+            'creditrating': ['10'],             // Papers 7, 10
+            'depositary': ['13'],               // Papers 7, 19
+            'noexam': ['3', '7']                // No RIQ
+        };
+
+        // Same LRP Requirements Groups for RO (4.4.3.1)
+        // RAs in the same group share the same LRP exam requirements for RO
+        const sameLRPGroups_RO = {
+            'paper2': ['1', '4', '8'],          // Papers 1, 2
+            'paper3': ['2', '5'],               // Papers 1, 3
+            'paper5': ['6'],                    // Papers 1, 5
+            'paper6': ['9'],                    // Papers 1, 6
+            'paper4': ['10'],                   // Papers 1, 4
+            'paper18': ['13'],                  // Papers 1, 18
+            'noexam': ['3', '7']                // No LRP
+        };
+
+        // Helper function: Check if two RAs have the same RIQ requirements
+        function hasSameRIQRequirements(ra1, ra2) {
+            for (const group of Object.values(sameRIQGroups)) {
+                if (group.includes(ra1) && group.includes(ra2)) return true;
+            }
+            return false;
+        }
+
+        // Helper function: Check if two RAs have the same LRP requirements for a given role
+        function hasSameLRPRequirements(ra1, ra2, role) {
+            if (role === 'LR') {
+                // All LRs have the same LRP requirements (Paper 1 only, except Type 3, 7)
+                const noExamTypes = ['3', '7'];
+                if (noExamTypes.includes(ra1) && noExamTypes.includes(ra2)) return true;
+                if (!noExamTypes.includes(ra1) && !noExamTypes.includes(ra2)) return true;
+                return false;
+            }
+            // For RO, check the specific groups
+            for (const group of Object.values(sameLRPGroups_RO)) {
+                if (group.includes(ra1) && group.includes(ra2)) return true;
+            }
+            return false;
+        }
+
+        // Get role for a specific RA from current/former licenses
+        function getRoleForRA(ra, prefix) {
+            const radioName = `${prefix}Role${ra}`;
+            const checked = document.querySelector(`input[name="${radioName}"]:checked`);
+            return checked ? checked.value : 'LR';
+        }
+
+        // Get all current licenses with roles
+        function getCurrentLicensesWithRoles() {
+            const licenses = {};
+            document.querySelectorAll('input[name="currentRA"]:checked').forEach(cb => {
+                const ra = cb.value;
+                licenses[ra] = getRoleForRA(ra, 'current');
+            });
+            return licenses;
+        }
+
+        // Get all former licenses with roles
+        function getFormerLicensesWithRoles() {
+            const licenses = {};
+            document.querySelectorAll('input[name="formerRA"]:checked').forEach(cb => {
+                const ra = cb.value;
+                licenses[ra] = getRoleForRA(ra, 'former');
+            });
+            return licenses;
+        }
+
+        // ==========================================
+        // EXEMPTION CHECK FUNCTIONS (SFC Guidelines)
+        // ==========================================
+
+        // RIQ Full Exemption (4.4.2.1)
+        function checkRIQFullExemption(inputs) {
+            const { currentLicense, currentLicenses, formerLicense, formerLicenses,
+                    yearsAbsent, applyingRA, applyingRole, tempLicence } = inputs;
+            const t = texts[lang];
+
+            // (a) Current licensee with same RIQ requirements and same role
+            if (currentLicense) {
+                for (const [ra, role] of Object.entries(currentLicenses)) {
+                    if (hasSameRIQRequirements(ra, applyingRA) && role === applyingRole) {
+                        return { exempt: true, type: 'full', reason: t.same_riq_same_role };
+                    }
+                }
+            }
+
+            // (a) Former licensee within 3 years with same RIQ requirements and same role
+            if (formerLicense && yearsAbsent < 3) {
+                for (const [ra, role] of Object.entries(formerLicenses)) {
+                    if (hasSameRIQRequirements(ra, applyingRA) && role === applyingRole) {
+                        return { exempt: true, type: 'full', reason: t.same_riq_same_role };
+                    }
+                }
+            }
+
+            // (b) Temporary licence for RAs 1, 2, 4, 5, 6, 10, 11
+            if (tempLicence && ['1','2','4','5','6','10','11'].includes(applyingRA)) {
+                return { exempt: true, type: 'full', reason: t.temp_licence_exemption };
+            }
+
+            return { exempt: false };
+        }
+
+        // RIQ Conditional Exemption (4.4.2.2)
+        function checkRIQConditionalExemption(inputs) {
+            const { currentLicense, currentLicenses, industryExp, applyingRA, applyingRole } = inputs;
+            const t = texts[lang];
+
+            // Current licensee + 5 years local experience in past 8 + different RIQ + same role
+            if (currentLicense && industryExp >= 5) {
+                for (const [ra, role] of Object.entries(currentLicenses)) {
+                    if (!hasSameRIQRequirements(ra, applyingRA) && role === applyingRole) {
+                        return {
+                            exempt: true,
+                            type: 'conditional',
+                            reason: t.different_riq_exp,
+                            conditions: [
+                                t.condition_licensing_conditions,
+                                t.condition_cpt_5_industry
+                            ]
+                        };
+                    }
+                }
+            }
+
+            return { exempt: false };
+        }
+
+        // LRP Full Exemption (4.4.3.1)
+        function checkLRPFullExemption(inputs) {
+            const { currentLicense, currentLicenses, formerLicense, formerLicenses,
+                    yearsAbsent, applyingRA, applyingRole, tempLicence, regulatoryWork } = inputs;
+            const t = texts[lang];
+
+            // (a) Current licensee with same LRP requirements and same role
+            if (currentLicense) {
+                for (const [ra, role] of Object.entries(currentLicenses)) {
+                    if (hasSameLRPRequirements(ra, applyingRA, applyingRole) && role === applyingRole) {
+                        return { exempt: true, type: 'full', reason: t.same_lrp_same_role };
+                    }
+                }
+            }
+
+            // (a) Former licensee within 3 years with same LRP requirements and same role
+            if (formerLicense && yearsAbsent < 3) {
+                for (const [ra, role] of Object.entries(formerLicenses)) {
+                    if (hasSameLRPRequirements(ra, applyingRA, applyingRole) && role === applyingRole) {
+                        return { exempt: true, type: 'full', reason: t.same_lrp_same_role };
+                    }
+                }
+            }
+
+            // (b) Temporary licence
+            if (tempLicence && ['1','2','4','5','6','10','11'].includes(applyingRA)) {
+                return { exempt: true, type: 'full', reason: t.temp_licence_exemption };
+            }
+
+            // (c) 3+ years full-time regulatory/compliance work in HK in same RA
+            if (regulatoryWork) {
+                return { exempt: true, type: 'full', reason: t.regulatory_work_exemption };
+            }
+
+            return { exempt: false };
+        }
+
+        // LRP Conditional Exemption 1 (4.4.3.2) - RO with substantial foreign experience
+        function checkLRPConditionalExemption1(inputs) {
+            const { applyingRole, schedule3Exp, industryExp6, limitedScope, roSupport } = inputs;
+            const t = texts[lang];
+
+            if (applyingRole !== 'RO') return { exempt: false };
+
+            // 8 years in Schedule 3 jurisdictions OR 6 years Schedule 3 + 2 years HK
+            const hasSubstantialForeignExp = schedule3Exp >= 8 || (schedule3Exp >= 6 && industryExp6 >= 2);
+
+            if (hasSubstantialForeignExp && limitedScope && roSupport) {
+                return {
+                    exempt: true,
+                    type: 'conditional',
+                    reason: lang === 'en' ? 'Substantial foreign experience' : lang === 'tc' ? '豐富海外經驗' : '丰富海外经验',
+                    conditions: [
+                        t.condition_limited_scope,
+                        t.condition_ro_supervision,
+                        t.condition_cpt_5_regulatory
+                    ]
+                };
+            }
+
+            return { exempt: false };
+        }
+
+        // LRP Conditional Exemption 2 (4.4.3.3) - RO, 5+ years local, different LRP
+        function checkLRPConditionalExemption2(inputs) {
+            const { currentLicense, currentLicenses, industryExp, applyingRA, applyingRole } = inputs;
+            const t = texts[lang];
+
+            if (applyingRole !== 'RO') return { exempt: false };
+
+            if (currentLicense && industryExp >= 5) {
+                for (const [ra, role] of Object.entries(currentLicenses)) {
+                    if (!hasSameLRPRequirements(ra, applyingRA, 'RO') && role === 'RO') {
+                        return {
+                            exempt: true,
+                            type: 'conditional',
+                            reason: lang === 'en' ? 'Different LRP requirements, 5+ years experience' : lang === 'tc' ? '不同LRP要求、5年以上經驗' : '不同LRP要求、5年以上经验',
+                            conditions: [
+                                t.condition_licensing_conditions,
+                                t.condition_cpt_5_regulatory
+                            ]
+                        };
+                    }
+                }
+            }
+
+            return { exempt: false };
+        }
+
+        // LRP Conditional Exemption 3 (4.4.3.4) - LR to RO upgrade
+        function checkLRPConditionalExemption3(inputs) {
+            const { currentLicense, currentLicenses, applyingRA, applyingRole, licensedHKExp } = inputs;
+            const t = texts[lang];
+
+            if (applyingRole !== 'RO') return { exempt: false };
+
+            if (currentLicense) {
+                // Check if currently LR for the same RA
+                const currentRoleForApplyingRA = currentLicenses[applyingRA];
+                if (currentRoleForApplyingRA === 'LR' && licensedHKExp >= 3) {
+                    return {
+                        exempt: true,
+                        type: 'conditional',
+                        reason: t.lr_to_ro_upgrade,
+                        conditions: [t.condition_cpt_5_regulatory]
+                    };
+                }
+            }
+
+            return { exempt: false };
+        }
+
+        // LRP Conditional Exemption 4 (4.4.3.5) - RO with 8+ years foreign experience, PI only
+        function checkLRPConditionalExemption4(inputs) {
+            const { applyingRole, schedule3Exp, piOnly } = inputs;
+            const t = texts[lang];
+
+            if (applyingRole !== 'RO') return { exempt: false };
+
+            if (schedule3Exp >= 8 && piOnly) {
+                return {
+                    exempt: true,
+                    type: 'conditional',
+                    reason: t.foreign_exp_pi,
+                    conditions: [
+                        t.condition_pi_only,
+                        t.condition_cpt_5_regulatory
+                    ]
+                };
+            }
+
+            return { exempt: false };
+        }
+
+        // LRP Conditional Exemption 5 (4.4.3.6) - LR Itinerant professional
+        function checkLRPConditionalExemption5(inputs) {
+            const { applyingRole, itinerant } = inputs;
+            const t = texts[lang];
+
+            if (applyingRole !== 'LR') return { exempt: false };
+
+            if (itinerant) {
+                return {
+                    exempt: true,
+                    type: 'conditional',
+                    reason: t.itinerant_exemption,
+                    conditions: [
+                        lang === 'en' ? 'Maximum 30 days per year in Hong Kong' : lang === 'tc' ? '每年在港不超過30天' : '每年在港不超过30天'
+                    ]
+                };
+            }
+
+            return { exempt: false };
+        }
+
+        // LRP Conditional Exemption 6 (4.4.3.7) - LR, current/former, never attempted Paper 1 OR different LRP
+        function checkLRPConditionalExemption6(inputs) {
+            const { currentLicense, currentLicenses, formerLicense, formerLicenses,
+                    yearsAbsent, applyingRA, applyingRole, neverAttemptedP1 } = inputs;
+            const t = texts[lang];
+
+            if (applyingRole !== 'LR') return { exempt: false };
+
+            const isCurrentOrRecentFormer = currentLicense || (formerLicense && yearsAbsent < 3);
+
+            if (isCurrentOrRecentFormer) {
+                const licenses = currentLicense ? currentLicenses : formerLicenses;
+                for (const [ra, role] of Object.entries(licenses)) {
+                    if (role === 'LR') {
+                        // Never attempted Paper 1
+                        if (neverAttemptedP1) {
+                            return {
+                                exempt: true,
+                                type: 'conditional',
+                                reason: lang === 'en' ? 'Never attempted Paper 1' : lang === 'tc' ? '從未嘗試過卷一' : '从未尝试过卷一',
+                                conditions: [t.condition_cpt_5_regulatory]
+                            };
+                        }
+                        // Different LRP requirements
+                        if (!hasSameLRPRequirements(ra, applyingRA, 'LR')) {
+                            return {
+                                exempt: true,
+                                type: 'conditional',
+                                reason: lang === 'en' ? 'Different LRP requirements' : lang === 'tc' ? '不同LRP要求' : '不同LRP要求',
+                                conditions: [t.condition_cpt_5_regulatory]
+                            };
+                        }
+                    }
+                }
+            }
+
+            return { exempt: false };
+        }
+
+        // Re-entrant Exemption (4.4.4.1)
+        function checkReentrantExemption(inputs) {
+            const { formerLicense, formerLicenses, yearsAbsent, applyingRA, applyingRole } = inputs;
+            const t = texts[lang];
+
+            if (!formerLicense) return { exempt: false };
+            if (yearsAbsent < 3 || yearsAbsent > 8) return { exempt: false };
+
+            for (const [ra, role] of Object.entries(formerLicenses)) {
+                if (hasSameRIQRequirements(ra, applyingRA) &&
+                    hasSameLRPRequirements(ra, applyingRA, applyingRole) &&
+                    role === applyingRole) {
+                    const cptHours = Math.ceil(yearsAbsent) * 5;
+                    return {
+                        exempt: true,
+                        type: 'reentrant',
+                        reason: lang === 'en' ? `Former licensee (${yearsAbsent} years absent)` : lang === 'tc' ? `曾持牌（離開${yearsAbsent}年）` : `曾持牌（离开${yearsAbsent}年）`,
+                        cptHours: cptHours,
+                        conditions: [
+                            lang === 'en' ? `${cptHours} CPT hours required (at least 50% local regulatory)` : lang === 'tc' ? `需${cptHours} CPT小時（至少50%本地監管）` : `需${cptHours} CPT小时（至少50%本地监管）`,
+                            lang === 'en' ? 'Must complete before application submission' : lang === 'tc' ? '必須在申請前完成' : '必须在申请前完成'
+                        ]
+                    };
+                }
+            }
+
+            return { exempt: false };
+        }
 
         // 2CExam Product Database
         const products = {
@@ -993,15 +1742,52 @@
             const industryExp = parseFloat(document.getElementById('industryExp')?.value) || 0;
             const industryExp6 = parseFloat(document.getElementById('industryExp6')?.value) || 0;
             const managementExp = parseFloat(document.getElementById('managementExp')?.value) || 0;
-            const piOnly = document.querySelector('input[name="piOnly"]:checked')?.value || 'no';
+            const piOnly = document.querySelector('input[name="piOnly"]:checked')?.value === 'yes';
+
+            // New fields for enhanced exemption logic
+            const tempLicence = document.querySelector('input[name="tempLicence"]:checked')?.value === 'yes';
+            const neverAttemptedP1 = document.querySelector('input[name="neverAttemptedP1"]:checked')?.value === 'yes';
+            const licensedHKExp = parseFloat(document.getElementById('licensedHKExp')?.value) || 0;
+            const schedule3Exp = parseFloat(document.getElementById('schedule3Exp')?.value) || 0;
+            const regulatoryWork = document.querySelector('input[name="regulatoryWork"]:checked')?.value === 'yes';
+            const limitedScope = document.querySelector('input[name="limitedScope"]:checked')?.value === 'yes';
+            const roSupport = document.querySelector('input[name="roSupport"]:checked')?.value === 'yes';
+            const itinerant = document.querySelector('input[name="itinerant"]:checked')?.value === 'yes';
 
             const profQuals = Array.from(document.querySelectorAll('input[name="profQual"]:checked')).map(c => c.value);
-            const currentRAs = Array.from(document.querySelectorAll('input[name="currentRA"]:checked')).map(c => c.value);
-            const formerRAs = Array.from(document.querySelectorAll('input[name="formerRA"]:checked')).map(c => c.value);
             const passedPapers = Array.from(document.querySelectorAll('input[name="passedPapers"]:checked')).map(c => c.value);
+
+            // Get current and former licenses WITH their roles
+            const currentLicenses = getCurrentLicensesWithRoles();
+            const formerLicenses = getFormerLicensesWithRoles();
+            const currentLicense = currentLic === 'yes' && Object.keys(currentLicenses).length > 0;
+            const formerLicense = formerLic === 'yes' && Object.keys(formerLicenses).length > 0;
 
             let eligibility = { ok: true, reasons: [], warnings: [] };
             let required = [], exempt = [], cptHours = 0, notes = [];
+            let conditionalExemptions = []; // Track conditional exemptions with their conditions
+
+            // Build inputs object for exemption functions
+            const inputs = {
+                currentLicense,
+                currentLicenses,
+                formerLicense,
+                formerLicenses,
+                yearsAbsent,
+                applyingRA: raType,
+                applyingRole: role,
+                tempLicence,
+                regulatoryWork,
+                industryExp,
+                industryExp6,
+                schedule3Exp,
+                limitedScope,
+                roSupport,
+                piOnly,
+                itinerant,
+                licensedHKExp,
+                neverAttemptedP1
+            };
 
             // Type 7 - no exam
             if (raType === '7') {
@@ -1012,57 +1798,184 @@
                 const lrp = role === 'RO' ? (examReq.LRP_RO[raType] || []) : (examReq.LRP_LR[raType] || []);
                 const riq = examReq.RIQ[raType] || [];
 
-                let riqExempt = false, riqReason = '';
-                if (['degreeRelevant','masters','mba'].includes(academicQual)) { riqExempt = true; riqReason = lang === 'en' ? 'Relevant degree' : lang === 'tc' ? '相關學位' : '相关学位'; }
-                if (profQuals.some(q => ['CFA','CIIA','CFP'].includes(q))) { riqExempt = true; riqReason = 'CFA/CIIA/CFP'; }
-                if (industryExp >= 5) { riqExempt = true; riqReason = lang === 'en' ? '5+ years experience' : lang === 'tc' ? '5年以上經驗' : '5年以上经验'; }
-                if (piOnly === 'yes' && industryExp >= 8 && raType === '9') { riqExempt = true; riqReason = lang === 'en' ? '8+ years (PI only)' : lang === 'tc' ? '8年以上經驗(專業投資者)' : '8年以上经验(专业投资者)'; }
-                if (currentLic === 'yes' && currentRAs.includes(raType)) { riqExempt = true; riqReason = lang === 'en' ? 'Currently licensed' : lang === 'tc' ? '目前持牌' : '目前持牌'; }
+                // ==========================================
+                // RIQ EXEMPTION CHECKS (in priority order)
+                // ==========================================
+                let riqExemptionResult = { exempt: false };
 
-                let lrpExempt = false, lrpReason = '';
-                if (currentLic === 'yes' && currentRAs.includes(raType)) { lrpExempt = true; lrpReason = lang === 'en' ? 'Currently licensed' : lang === 'tc' ? '目前持牌' : '目前持牌'; }
-                if (formerLic === 'yes' && yearsAbsent < 3 && formerRAs.includes(raType)) { lrpExempt = riqExempt = true; lrpReason = riqReason = lang === 'en' ? 'Former licensee <3 years' : lang === 'tc' ? '3年內曾持牌' : '3年内曾持牌'; }
-                if (formerLic === 'yes' && yearsAbsent >= 3 && yearsAbsent <= 8 && formerRAs.includes(raType)) {
-                    cptHours = Math.ceil(yearsAbsent) * 5;
-                    lrpExempt = riqExempt = true;
-                    lrpReason = riqReason = lang === 'en' ? 'Former licensee (CPT required)' : lang === 'tc' ? '曾持牌(需CPT)' : '曾持牌(需CPT)';
+                // 1. Check if passed papers
+                // (handled individually per paper below)
+
+                // 2. Check RIQ Full Exemption (4.4.2.1)
+                riqExemptionResult = checkRIQFullExemption(inputs);
+
+                // 3. If no full exemption, check Re-entrant Exemption (4.4.4.1)
+                if (!riqExemptionResult.exempt) {
+                    riqExemptionResult = checkReentrantExemption(inputs);
+                    if (riqExemptionResult.exempt && riqExemptionResult.cptHours) {
+                        cptHours = Math.max(cptHours, riqExemptionResult.cptHours);
+                    }
                 }
 
+                // 4. If still no exemption, check RIQ Conditional Exemption (4.4.2.2)
+                if (!riqExemptionResult.exempt) {
+                    riqExemptionResult = checkRIQConditionalExemption(inputs);
+                    if (riqExemptionResult.exempt && riqExemptionResult.conditions) {
+                        conditionalExemptions.push({
+                            type: 'RIQ',
+                            reason: riqExemptionResult.reason,
+                            conditions: riqExemptionResult.conditions
+                        });
+                    }
+                }
+
+                // 5. Check academic/professional qualifications for RIQ exemption (always applicable)
+                if (!riqExemptionResult.exempt) {
+                    if (['degreeRelevant','masters','mba'].includes(academicQual)) {
+                        riqExemptionResult = { exempt: true, type: 'full', reason: lang === 'en' ? 'Relevant degree' : lang === 'tc' ? '相關學位' : '相关学位' };
+                    } else if (profQuals.some(q => ['CFA','CIIA','CFP'].includes(q))) {
+                        riqExemptionResult = { exempt: true, type: 'full', reason: 'CFA/CIIA/CFP' };
+                    } else if (industryExp >= 5) {
+                        riqExemptionResult = { exempt: true, type: 'full', reason: lang === 'en' ? '5+ years experience' : lang === 'tc' ? '5年以上經驗' : '5年以上经验' };
+                    } else if (piOnly && industryExp >= 8 && raType === '9') {
+                        riqExemptionResult = { exempt: true, type: 'full', reason: lang === 'en' ? '8+ years (PI only)' : lang === 'tc' ? '8年以上經驗(專業投資者)' : '8年以上经验(专业投资者)' };
+                    }
+                }
+
+                // ==========================================
+                // LRP EXEMPTION CHECKS (in priority order)
+                // ==========================================
+                let lrpExemptionResult = { exempt: false };
+
+                // 1. Check LRP Full Exemption (4.4.3.1)
+                lrpExemptionResult = checkLRPFullExemption(inputs);
+
+                // 2. If no full exemption, check Re-entrant Exemption (4.4.4.1)
+                if (!lrpExemptionResult.exempt) {
+                    const reentrantResult = checkReentrantExemption(inputs);
+                    if (reentrantResult.exempt) {
+                        lrpExemptionResult = reentrantResult;
+                        if (reentrantResult.cptHours) {
+                            cptHours = Math.max(cptHours, reentrantResult.cptHours);
+                        }
+                        if (reentrantResult.conditions) {
+                            conditionalExemptions.push({
+                                type: 'Re-entrant',
+                                reason: reentrantResult.reason,
+                                conditions: reentrantResult.conditions
+                            });
+                        }
+                    }
+                }
+
+                // 3. Check LRP Conditional Exemptions (only if no full exemption)
+                if (!lrpExemptionResult.exempt) {
+                    // Check each conditional exemption in order
+                    const conditionalChecks = [
+                        checkLRPConditionalExemption3, // LR to RO upgrade (most common case for the bug)
+                        checkLRPConditionalExemption1, // Substantial foreign experience
+                        checkLRPConditionalExemption2, // Different LRP, 5+ years
+                        checkLRPConditionalExemption4, // Foreign exp, PI only
+                        checkLRPConditionalExemption5, // Itinerant (LR only)
+                        checkLRPConditionalExemption6  // Never attempted P1 or different LRP (LR only)
+                    ];
+
+                    for (const checkFn of conditionalChecks) {
+                        const result = checkFn(inputs);
+                        if (result.exempt) {
+                            lrpExemptionResult = result;
+                            if (result.conditions) {
+                                conditionalExemptions.push({
+                                    type: 'LRP',
+                                    reason: result.reason,
+                                    conditions: result.conditions
+                                });
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // ==========================================
+                // PROCESS RIQ PAPERS
+                // ==========================================
                 riq.forEach(p => {
-                    if (passedPapers.includes(p)) exempt.push({p, r: lang === 'en' ? 'Passed' : lang === 'tc' ? '已通過' : '已通过'});
-                    else if (riqExempt) exempt.push({p, r: riqReason});
-                    else required.push({p, t: 'RIQ'});
+                    if (passedPapers.includes(p)) {
+                        exempt.push({
+                            p,
+                            r: lang === 'en' ? 'Passed' : lang === 'tc' ? '已通過' : '已通过',
+                            type: 'full'
+                        });
+                    } else if (riqExemptionResult.exempt) {
+                        exempt.push({
+                            p,
+                            r: riqExemptionResult.reason,
+                            type: riqExemptionResult.type || 'full',
+                            conditions: riqExemptionResult.conditions
+                        });
+                    } else {
+                        required.push({p, t: 'RIQ'});
+                    }
                 });
 
+                // ==========================================
+                // PROCESS LRP PAPERS
+                // ==========================================
                 lrp.forEach(p => {
+                    // Check if already passed
                     if (passedPapers.includes(p)) {
-                        exempt.push({p, r: lang === 'en' ? 'Passed' : lang === 'tc' ? '已通過' : '已通过'});
-                    } else if (p === '1' && currentLic === 'yes') {
-                        exempt.push({p, r: lang === 'en' ? 'Currently licensed' : lang === 'tc' ? '目前持牌' : '目前持牌'});
-                    } else if (p === '1' && formerLic === 'yes' && yearsAbsent <= 8 && formerRAs.length > 0) {
-                        // Paper 1 exempt for former licensees within 8 years
+                        exempt.push({
+                            p,
+                            r: lang === 'en' ? 'Passed' : lang === 'tc' ? '已通過' : '已通过',
+                            type: 'full'
+                        });
+                    }
+                    // Paper 1 special handling - always exempt if currently licensed
+                    else if (p === '1' && currentLicense) {
+                        exempt.push({
+                            p,
+                            r: lang === 'en' ? 'Currently licensed' : lang === 'tc' ? '目前持牌' : '目前持牌',
+                            type: 'full'
+                        });
+                    }
+                    // Paper 1 - exempt for former licensees within 8 years
+                    else if (p === '1' && formerLicense && yearsAbsent <= 8) {
                         const reason = yearsAbsent < 3
                             ? (lang === 'en' ? 'Former licensee <3 years' : lang === 'tc' ? '3年內曾持牌' : '3年内曾持牌')
                             : (lang === 'en' ? 'Former licensee ≤8 years' : lang === 'tc' ? '8年內曾持牌' : '8年内曾持牌');
-                        exempt.push({p, r: reason});
-                    } else if (lrpExempt && yearsAbsent < 3) {
-                        exempt.push({p, r: lrpReason});
-                    } else {
+                        exempt.push({ p, r: reason, type: yearsAbsent < 3 ? 'full' : 'reentrant' });
+                    }
+                    // Other LRP papers - check exemption result
+                    else if (lrpExemptionResult.exempt) {
+                        exempt.push({
+                            p,
+                            r: lrpExemptionResult.reason,
+                            type: lrpExemptionResult.type || 'full',
+                            conditions: lrpExemptionResult.conditions
+                        });
+                    }
+                    // No exemption - paper required
+                    else {
                         required.push({p, t: 'LRP'});
                     }
                 });
             }
 
-            if (academicQual === 'none' && currentLic !== 'yes') {
+            // Academic eligibility check
+            if (academicQual === 'none' && !currentLicense) {
                 eligibility.ok = false;
                 eligibility.reasons.push(lang === 'en' ? 'Minimum academic qualification required.' : lang === 'tc' ? '需要最低學歷要求。' : '需要最低学历要求。');
             }
+
+            // RO experience requirements check
             if (role === 'RO') {
                 if (industryExp6 < 3) eligibility.warnings.push(lang === 'en' ? `RO needs 3+ years in 6 years (you: ${industryExp6})` : lang === 'tc' ? `負責人員需過去6年內3年經驗(您:${industryExp6}年)` : `负责人员需过去6年内3年经验(您:${industryExp6}年)`);
                 if (managementExp < 2) eligibility.warnings.push(lang === 'en' ? `RO needs 2+ years management (you: ${managementExp})` : lang === 'tc' ? `負責人員需2年管理經驗(您:${managementExp}年)` : `负责人员需2年管理经验(您:${managementExp}年)`);
             }
 
-            // Show results
+            // ==========================================
+            // SHOW RESULTS
+            // ==========================================
             let html = '';
             const pn = paperNames[lang];
 
@@ -1078,22 +1991,41 @@
                 if (eligibility.warnings.length) html += `<ul>${eligibility.warnings.map(w => `<li>${w}</li>`).join('')}</ul>`;
                 html += '</div>';
 
+                // Show required papers
                 if (required.length) {
                     html += `<div class="card"><div class="card-header" style="background:#ffebee;"><h2>📝 ${t.papers_required}</h2></div><div class="card-body"><ul class="result-list">`;
                     required.forEach(r => html += `<li><span>${pn[r.p] || 'Paper '+r.p}</span><span class="badge badge-danger">${r.t}</span></li>`);
                     html += '</ul></div></div>';
                 }
 
+                // Show exempt papers with exemption type
                 if (exempt.length) {
                     html += `<div class="card"><div class="card-header" style="background:#e8f5e9;"><h2>✓ ${t.papers_exempt}</h2></div><div class="card-body"><ul class="result-list">`;
-                    exempt.forEach(e => html += `<li class="exempt"><span>${pn[e.p] || 'Paper '+e.p}</span><span class="badge badge-success">${e.r}</span></li>`);
+                    exempt.forEach(e => {
+                        const typeLabel = e.type === 'conditional' ? ` (${t.exempt_conditional})` :
+                                          e.type === 'reentrant' ? ` (${t.exempt_reentrant})` : '';
+                        html += `<li class="exempt"><span>${pn[e.p] || 'Paper '+e.p}</span><span class="badge badge-success">${e.r}${typeLabel}</span></li>`;
+                    });
                     html += '</ul></div></div>';
                 }
 
+                // Show conditional exemption conditions
+                if (conditionalExemptions.length > 0) {
+                    html += `<div class="card" style="border-left: 4px solid var(--warning);"><div class="card-header" style="background:#fff8e1;"><h2>⚠️ ${t.conditions_title}</h2></div><div class="card-body">`;
+                    conditionalExemptions.forEach(ce => {
+                        html += `<div style="margin-bottom:15px;"><strong>${ce.type}: ${ce.reason}</strong><ul style="margin-top:8px;padding-left:20px;">`;
+                        ce.conditions.forEach(c => html += `<li style="margin-bottom:5px;">${c}</li>`);
+                        html += '</ul></div>';
+                    });
+                    html += '</div></div>';
+                }
+
+                // Show CPT hours if required
                 if (cptHours > 0) {
                     html += `<div class="result-box warning"><h3>⏰ ${t.cpt_required}</h3><p style="font-size:2rem;font-weight:700;color:#ED1C24;">${cptHours} ${lang === 'en' ? 'hours' : '小時'}</p><p>${t.cpt_before}</p></div>`;
                 }
 
+                // Summary
                 html += `<div class="card"><div class="card-header"><h2>📊 ${t.summary}</h2></div><div class="card-body">
                     <p><strong>${t.papers_to_pass}</strong> <span style="color:${required.length ? '#dc3545' : '#28a745'};font-weight:700;">${required.length}</span></p>
                     <p><strong>${t.papers_exempt_count}</strong> <span style="color:#28a745;font-weight:700;">${exempt.length}</span></p>
@@ -1123,11 +2055,29 @@
             document.getElementById('currentRAGroup').style.display = 'none';
             document.getElementById('yearsAbsentGroup').style.display = 'none';
             document.getElementById('formerRAGroup').style.display = 'none';
+            // Reset license rows selected state
+            document.querySelectorAll('.license-row').forEach(row => row.classList.remove('selected'));
+            // Reset never attempted P1 visibility
+            const neverP1Row = document.getElementById('neverAttemptedP1Row');
+            if (neverP1Row) neverP1Row.style.display = 'none';
+            // Reset conditional fields visibility
+            const roFields = document.getElementById('roConditionalFields');
+            const lrFields = document.getElementById('lrConditionalFields');
+            if (roFields) roFields.style.display = 'none';
+            if (lrFields) lrFields.style.display = 'none';
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
             document.getElementById('step1').classList.add('active');
             window.scrollTo(0, 0);
         }
+
+        // Initialize conditional field visibility on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const roFields = document.getElementById('roConditionalFields');
+            const lrFields = document.getElementById('lrConditionalFields');
+            if (roFields) roFields.style.display = 'none';
+            if (lrFields) lrFields.style.display = 'none';
+        });
     </script>
 </body>
 </html>
-<!-- v2 -->
+<!-- v3 - Enhanced Exemption Logic -->
