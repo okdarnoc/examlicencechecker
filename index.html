@@ -595,6 +595,13 @@
                         <p id="s4_desc">選擇過去3年內已通過的試卷。</p>
                     </div>
                     <div class="card-body">
+                        <!-- LRP Explanation Box -->
+                        <div class="info-box" style="margin-bottom:20px;">
+                            <div>
+                                <p><strong id="lrp_explain_title">LRP（本地監管架構試卷）</strong></p>
+                                <p id="lrp_explain_text" style="margin-top:5px;">測試香港證券及期貨市場的法規知識。<strong>卷一</strong>為通用監管試卷，所有持牌人士均須通過（第3、7類除外）。<strong>卷二至六、十八</strong>為專項監管試卷，僅負責人員(RO)須按其受規管活動類別通過相應試卷。</p>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label id="lrp_papers_label">LRP試卷（監管）：</label>
                             <div class="checkbox-grid">
@@ -605,6 +612,15 @@
                                 <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="5"><span id="p5">卷五</span></label>
                                 <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="6"><span id="p6">卷六</span></label>
                                 <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="18"><span id="p18">卷十八</span></label>
+                            </div>
+                            <p class="help-text" id="lrp_papers_help" style="margin-top:10px;">卷一：通用監管 | 卷二：證券(1,4,8類RO) | 卷三：衍生工具(2,5類RO) | 卷四：信貸評級(10類RO) | 卷五：機構融資(6類RO) | 卷六：資產管理(9類RO) | 卷十八：存管服務(13類RO)</p>
+                        </div>
+
+                        <!-- RIQ Explanation Box -->
+                        <div class="info-box" style="margin-bottom:20px;margin-top:25px;">
+                            <div>
+                                <p><strong id="riq_explain_title">RIQ（認可行業資格試卷）</strong></p>
+                                <p id="riq_explain_text" style="margin-top:5px;">測試金融市場及產品的實務知識。<strong>卷七</strong>為通用金融市場試卷，大部分受規管活動均須通過。<strong>卷八至十二、十九</strong>為專項產品試卷，須按受規管活動類別通過相應試卷。持有相關學歷或專業資格（如CFA）者可獲豁免。</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -618,6 +634,7 @@
                                 <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="12"><span id="p12">卷十二</span></label>
                                 <label class="checkbox-item"><input type="checkbox" name="passedPapers" value="19"><span id="p19">卷十九</span></label>
                             </div>
+                            <p class="help-text" id="riq_papers_help" style="margin-top:10px;">卷七：金融市場(通用) | 卷八：證券(1,4,8類) | 卷九：衍生工具(2,5類) | 卷十：信貸評級(10類) | 卷十一：機構融資(6類) | 卷十二：資產管理(9類) | 卷十九：存管服務(13類)</p>
                         </div>
                         <div class="form-group">
                             <label id="add_papers_label">其他試卷：</label>
@@ -719,8 +736,14 @@
                 mgmt_help: "RO requires 2+ years",
                 pi_label: "Serving professional investors only?",
                 s4_title: "Step 4: Exam History", s4_desc: "Select papers passed within 3 years.",
+                lrp_explain_title: "LRP (Local Regulatory Paper)",
+                lrp_explain_text: "Tests knowledge of Hong Kong securities and futures regulations. <strong>Paper 1</strong> is the general regulatory paper required for all licensed persons (except Types 3, 7). <strong>Papers 2-6, 18</strong> are specialized regulatory papers required only for Responsible Officers (RO) based on their RA type.",
                 lrp_papers_label: "LRP Papers (Regulatory):",
+                lrp_papers_help: "Paper 1: General Regulation | Paper 2: Securities (Types 1,4,8 RO) | Paper 3: Derivatives (Types 2,5 RO) | Paper 4: Credit Rating (Type 10 RO) | Paper 5: Corporate Finance (Type 6 RO) | Paper 6: Asset Management (Type 9 RO) | Paper 18: Depositary (Type 13 RO)",
+                riq_explain_title: "RIQ (Recognized Industry Qualification)",
+                riq_explain_text: "Tests practical knowledge of financial markets and products. <strong>Paper 7</strong> is the general financial markets paper required for most RAs. <strong>Papers 8-12, 19</strong> are specialized product papers based on RA type. Those with relevant degrees or professional qualifications (e.g., CFA) may be exempt.",
                 riq_papers_label: "RIQ Papers (Practical):",
+                riq_papers_help: "Paper 7: Financial Markets (General) | Paper 8: Securities (Types 1,4,8) | Paper 9: Derivatives (Types 2,5) | Paper 10: Credit Rating (Type 10) | Paper 11: Corporate Finance (Type 6) | Paper 12: Asset Management (Type 9) | Paper 19: Depositary (Type 13)",
                 add_papers_label: "Additional Papers:",
                 p1: "Paper 1", p2: "Paper 2", p3: "Paper 3", p4: "Paper 4", p5: "Paper 5", p6: "Paper 6",
                 p7: "Paper 7", p8: "Paper 8", p9: "Paper 9", p10: "Paper 10", p11: "Paper 11", p12: "Paper 12",
@@ -838,8 +861,14 @@
                 mgmt_help: "負責人員需2年以上",
                 pi_label: "是否只服務專業投資者？",
                 s4_title: "第四步：考試紀錄", s4_desc: "選擇過去3年內已通過的試卷。",
+                lrp_explain_title: "LRP（本地監管架構試卷）",
+                lrp_explain_text: "測試香港證券及期貨市場的法規知識。<strong>卷一</strong>為通用監管試卷，所有持牌人士均須通過（第3、7類除外）。<strong>卷二至六、十八</strong>為專項監管試卷，僅負責人員(RO)須按其受規管活動類別通過相應試卷。",
                 lrp_papers_label: "LRP試卷（監管）：",
+                lrp_papers_help: "卷一：通用監管 | 卷二：證券(1,4,8類RO) | 卷三：衍生工具(2,5類RO) | 卷四：信貸評級(10類RO) | 卷五：機構融資(6類RO) | 卷六：資產管理(9類RO) | 卷十八：存管服務(13類RO)",
+                riq_explain_title: "RIQ（認可行業資格試卷）",
+                riq_explain_text: "測試金融市場及產品的實務知識。<strong>卷七</strong>為通用金融市場試卷，大部分受規管活動均須通過。<strong>卷八至十二、十九</strong>為專項產品試卷，須按受規管活動類別通過相應試卷。持有相關學歷或專業資格（如CFA）者可獲豁免。",
                 riq_papers_label: "RIQ試卷（實務）：",
+                riq_papers_help: "卷七：金融市場(通用) | 卷八：證券(1,4,8類) | 卷九：衍生工具(2,5類) | 卷十：信貸評級(10類) | 卷十一：機構融資(6類) | 卷十二：資產管理(9類) | 卷十九：存管服務(13類)",
                 add_papers_label: "其他試卷：",
                 p1: "卷一", p2: "卷二", p3: "卷三", p4: "卷四", p5: "卷五", p6: "卷六",
                 p7: "卷七", p8: "卷八", p9: "卷九", p10: "卷十", p11: "卷十一", p12: "卷十二",
@@ -957,8 +986,14 @@
                 mgmt_help: "负责人员需2年以上",
                 pi_label: "是否只服务专业投资者？",
                 s4_title: "第四步：考试记录", s4_desc: "选择过去3年内已通过的试卷。",
+                lrp_explain_title: "LRP（本地监管架构试卷）",
+                lrp_explain_text: "测试香港证券及期货市场的法规知识。<strong>卷一</strong>为通用监管试卷，所有持牌人士均须通过（第3、7类除外）。<strong>卷二至六、十八</strong>为专项监管试卷，仅负责人员(RO)须按其受规管活动类别通过相应试卷。",
                 lrp_papers_label: "LRP试卷（监管）：",
+                lrp_papers_help: "卷一：通用监管 | 卷二：证券(1,4,8类RO) | 卷三：衍生工具(2,5类RO) | 卷四：信贷评级(10类RO) | 卷五：机构融资(6类RO) | 卷六：资产管理(9类RO) | 卷十八：存管服务(13类RO)",
+                riq_explain_title: "RIQ（认可行业资格试卷）",
+                riq_explain_text: "测试金融市场及产品的实务知识。<strong>卷七</strong>为通用金融市场试卷，大部分受规管活动均须通过。<strong>卷八至十二、十九</strong>为专项产品试卷，须按受规管活动类别通过相应试卷。持有相关学历或专业资格（如CFA）者可获豁免。",
                 riq_papers_label: "RIQ试卷（实务）：",
+                riq_papers_help: "卷七：金融市场(通用) | 卷八：证券(1,4,8类) | 卷九：衍生工具(2,5类) | 卷十：信贷评级(10类) | 卷十一：机构融资(6类) | 卷十二：资产管理(9类) | 卷十九：存管服务(13类)",
                 add_papers_label: "其他试卷：",
                 p1: "卷一", p2: "卷二", p3: "卷三", p4: "卷四", p5: "卷五", p6: "卷六",
                 p7: "卷七", p8: "卷八", p9: "卷九", p10: "卷十", p11: "卷十一", p12: "卷十二",
