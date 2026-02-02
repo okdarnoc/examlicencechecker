@@ -2043,10 +2043,24 @@
                 eligibility.reasons.push(lang === 'en' ? 'Minimum academic qualification required.' : lang === 'tc' ? '需要最低學歷要求。' : '需要最低学历要求。');
             }
 
-            // RO experience requirements check
+            // RO experience requirements check - these are HARD requirements
             if (role === 'RO') {
-                if (industryExp6 < 3) eligibility.warnings.push(lang === 'en' ? `RO needs 3+ years in 6 years (you: ${industryExp6})` : lang === 'tc' ? `負責人員需過去6年內3年經驗(您:${industryExp6}年)` : `负责人员需过去6年内3年经验(您:${industryExp6}年)`);
-                if (managementExp < 2) eligibility.warnings.push(lang === 'en' ? `RO needs 2+ years management (you: ${managementExp})` : lang === 'tc' ? `負責人員需2年管理經驗(您:${managementExp}年)` : `负责人员需2年管理经验(您:${managementExp}年)`);
+                if (industryExp6 < 3) {
+                    eligibility.ok = false;
+                    eligibility.reasons.push(lang === 'en'
+                        ? `RO requires minimum 3 years relevant experience in past 6 years (you have: ${industryExp6} years)`
+                        : lang === 'tc'
+                        ? `負責人員必須具備過去6年內至少3年相關經驗（您有：${industryExp6}年）`
+                        : `负责人员必须具备过去6年内至少3年相关经验（您有：${industryExp6}年）`);
+                }
+                if (managementExp < 2) {
+                    eligibility.ok = false;
+                    eligibility.reasons.push(lang === 'en'
+                        ? `RO requires minimum 2 years management experience (you have: ${managementExp} years)`
+                        : lang === 'tc'
+                        ? `負責人員必須具備至少2年管理經驗（您有：${managementExp}年）`
+                        : `负责人员必须具备至少2年管理经验（您有：${managementExp}年）`);
+                }
             }
 
             // ==========================================
