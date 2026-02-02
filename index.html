@@ -435,6 +435,8 @@
                                         <label><input type="radio" name="tempLicence" value="no" checked><span id="temp_no">否</span></label>
                                     </div>
                                 </div>
+                                <p class="help-text" id="temp_licence_help" style="margin-bottom:15px;">臨時牌照申請人可獲豁免RIQ及LRP考試要求（僅適用於第1、2、4、5、6、10、11類）。詳見《指引》4.4.2.1(b)及4.4.3.1(b)。</p>
+
                                 <div class="field-row" id="neverAttemptedP1Row" style="display:none;">
                                     <label id="never_p1_label">從未嘗試過卷一考試？</label>
                                     <div class="mini-toggle">
@@ -442,11 +444,14 @@
                                         <label><input type="radio" name="neverAttemptedP1" value="no" checked><span id="never_p1_no">否</span></label>
                                     </div>
                                 </div>
+                                <p class="help-text" id="never_p1_help" style="margin-bottom:15px;display:none;">根據《指引》4.4.3.7，現時或3年內曾持牌的LR若從未嘗試過卷一考試，可獲有條件豁免，但需額外完成+5 CPT小時（本地監管知識）。</p>
+
                                 <div class="field-row">
                                     <label id="licensed_hk_exp_label">持牌香港經驗：</label>
                                     <input type="number" id="licensedHKExp" min="0" max="30" step="0.5" value="0">
                                     <span class="unit" id="years_unit5">年</span>
                                 </div>
+                                <p class="help-text" id="licensed_hk_exp_help">在香港持有證監會牌照從事受規管活動的總年資。若您目前持牌為LR並申請升級為同一類別的RO，需具備3年以上持牌經驗方可獲有條件豁免LRP考試（《指引》4.4.3.4）。</p>
                             </div>
                         </div>
                     </div>
@@ -523,11 +528,14 @@
                         <div class="form-group" id="roConditionalFields">
                             <div class="conditional-field">
                                 <p style="font-weight:600;margin-bottom:15px;color:var(--secondary);" id="ro_conditional_title">負責人員有條件豁免相關資料：</p>
+
                                 <div class="field-row">
                                     <label id="schedule3_exp_label">附表3認可交易所司法管轄區經驗：</label>
                                     <input type="number" id="schedule3Exp" min="0" max="30" step="0.5" value="0">
                                     <span class="unit" id="years_unit6">年</span>
                                 </div>
+                                <p class="help-text" id="schedule3_exp_help" style="margin-bottom:15px;">在《證券及期貨(在證券市場上市)規則》附表3所列認可交易所的司法管轄區（如美國、英國、日本、澳洲、新加坡等）從事相關受規管活動的經驗年資。8年以上可獲有條件豁免（《指引》4.4.3.2及4.4.3.5）。</p>
+
                                 <div class="field-row">
                                     <label id="regulatory_work_label">過去6年內全職監管/合規工作滿3年？</label>
                                     <div class="mini-toggle">
@@ -535,6 +543,8 @@
                                         <label><input type="radio" name="regulatoryWork" value="no" checked><span id="reg_no">否</span></label>
                                     </div>
                                 </div>
+                                <p class="help-text" id="regulatory_work_help" style="margin-bottom:15px;">在香港從事全職監管或合規工作（如在證監會、金管局、保監局或持牌法團的合規部門工作）。符合者可獲完全豁免LRP考試（《指引》4.4.3.1(c)）。</p>
+
                                 <div class="field-row">
                                     <label id="limited_scope_label">有限範圍活動/高級管理人員角色？</label>
                                     <div class="mini-toggle">
@@ -542,6 +552,8 @@
                                         <label><input type="radio" name="limitedScope" value="no" checked><span id="scope_no">否</span></label>
                                     </div>
                                 </div>
+                                <p class="help-text" id="limited_scope_help" style="margin-bottom:15px;">指RO只從事有限範圍的受規管活動（如僅處理機構客戶或專業投資者業務），或擔任高級管理人員角色（如CEO、COO）而非直接從事前線業務。適用於具豐富海外經驗者的有條件豁免（《指引》4.4.3.2）。</p>
+
                                 <div class="field-row">
                                     <label id="ro_support_label">獲指定負責人員監管支援？</label>
                                     <div class="mini-toggle">
@@ -549,6 +561,7 @@
                                         <label><input type="radio" name="roSupport" value="no" checked><span id="support_no">否</span></label>
                                     </div>
                                 </div>
+                                <p class="help-text" id="ro_support_help">指公司已指定一名現有的負責人員（具備完整本地監管知識）為您提供監督及支援。這是具豐富海外經驗者獲有條件豁免的必要條件（《指引》4.4.3.2）。</p>
                             </div>
                         </div>
 
@@ -563,6 +576,7 @@
                                         <label><input type="radio" name="itinerant" value="no" checked><span id="itin_no">否</span></label>
                                     </div>
                                 </div>
+                                <p class="help-text" id="itinerant_help">指每年在香港逗留不超過30天、主要在海外工作的專業人士。巡迴專業人士可獲有條件豁免LRP考試，但牌照會附帶相關條件限制其在港活動範圍（《指引》4.4.3.6）。</p>
                             </div>
                         </div>
                     </div>
@@ -752,6 +766,15 @@
                 lr_conditional_title: "LR Conditional Exemption Information:",
                 itinerant_label: "Itinerant Professional (less than 30 days/year in HK)?",
                 itin_yes: "Yes", itin_no: "No",
+                // Help text for conditional exemption fields
+                temp_licence_help: "Temporary licence applicants are exempt from RIQ and LRP exam requirements (applicable to Types 1, 2, 4, 5, 6, 10, 11 only). See Guidelines 4.4.2.1(b) and 4.4.3.1(b).",
+                never_p1_help: "Per Guidelines 4.4.3.7, current or former LRs (within 3 years) who have never attempted Paper 1 may obtain conditional exemption, but must complete +5 CPT hours (local regulatory knowledge).",
+                licensed_hk_exp_help: "Total years holding an SFC licence while carrying on regulated activities in Hong Kong. If you are currently licensed as LR and applying to upgrade to RO for the same RA type, you need 3+ years of licensed experience for conditional LRP exemption (Guidelines 4.4.3.4).",
+                schedule3_exp_help: "Experience in regulated activities in jurisdictions with recognized exchanges listed in Schedule 3 of the Securities and Futures (Stock Market Listing) Rules (e.g., USA, UK, Japan, Australia, Singapore). 8+ years qualifies for conditional exemption (Guidelines 4.4.3.2 and 4.4.3.5).",
+                regulatory_work_help: "Full-time regulatory or compliance work in Hong Kong (e.g., at SFC, HKMA, IA, or compliance department of licensed corporations). Qualifying individuals are fully exempt from LRP exams (Guidelines 4.4.3.1(c)).",
+                limited_scope_help: "Means the RO only engages in limited scope regulated activities (e.g., serving only institutional clients or professional investors), or holds a senior management role (e.g., CEO, COO) rather than direct front-line business. Applies to conditional exemption for those with substantial overseas experience (Guidelines 4.4.3.2).",
+                ro_support_help: "Means the firm has designated an existing Responsible Officer (with full local regulatory knowledge) to provide supervision and support. This is a mandatory condition for conditional exemption for those with substantial overseas experience (Guidelines 4.4.3.2).",
+                itinerant_help: "Refers to professionals who stay in Hong Kong for no more than 30 days per year and primarily work overseas. Itinerant professionals may obtain conditional LRP exemption, but the licence will be subject to conditions limiting their activities in Hong Kong (Guidelines 4.4.3.6).",
                 // Exemption result translations
                 exempt_full: "Full Exemption",
                 exempt_conditional: "Conditional Exemption",
@@ -862,6 +885,15 @@
                 lr_conditional_title: "持牌代表有條件豁免相關資料：",
                 itinerant_label: "巡迴專業人士（每年在港少於30天）？",
                 itin_yes: "是", itin_no: "否",
+                // Help text for conditional exemption fields
+                temp_licence_help: "臨時牌照申請人可獲豁免RIQ及LRP考試要求（僅適用於第1、2、4、5、6、10、11類）。詳見《指引》4.4.2.1(b)及4.4.3.1(b)。",
+                never_p1_help: "根據《指引》4.4.3.7，現時或3年內曾持牌的LR若從未嘗試過卷一考試，可獲有條件豁免，但需額外完成+5 CPT小時（本地監管知識）。",
+                licensed_hk_exp_help: "在香港持有證監會牌照從事受規管活動的總年資。若您目前持牌為LR並申請升級為同一類別的RO，需具備3年以上持牌經驗方可獲有條件豁免LRP考試（《指引》4.4.3.4）。",
+                schedule3_exp_help: "在《證券及期貨(在證券市場上市)規則》附表3所列認可交易所的司法管轄區（如美國、英國、日本、澳洲、新加坡等）從事相關受規管活動的經驗年資。8年以上可獲有條件豁免（《指引》4.4.3.2及4.4.3.5）。",
+                regulatory_work_help: "在香港從事全職監管或合規工作（如在證監會、金管局、保監局或持牌法團的合規部門工作）。符合者可獲完全豁免LRP考試（《指引》4.4.3.1(c)）。",
+                limited_scope_help: "指RO只從事有限範圍的受規管活動（如僅處理機構客戶或專業投資者業務），或擔任高級管理人員角色（如CEO、COO）而非直接從事前線業務。適用於具豐富海外經驗者的有條件豁免（《指引》4.4.3.2）。",
+                ro_support_help: "指公司已指定一名現有的負責人員（具備完整本地監管知識）為您提供監督及支援。這是具豐富海外經驗者獲有條件豁免的必要條件（《指引》4.4.3.2）。",
+                itinerant_help: "指每年在香港逗留不超過30天、主要在海外工作的專業人士。巡迴專業人士可獲有條件豁免LRP考試，但牌照會附帶相關條件限制其在港活動範圍（《指引》4.4.3.6）。",
                 // Exemption result translations
                 exempt_full: "完全豁免",
                 exempt_conditional: "有條件豁免",
@@ -972,6 +1004,15 @@
                 lr_conditional_title: "持牌代表有条件豁免相关资料：",
                 itinerant_label: "巡回专业人士（每年在港少于30天）？",
                 itin_yes: "是", itin_no: "否",
+                // Help text for conditional exemption fields
+                temp_licence_help: "临时牌照申请人可获豁免RIQ及LRP考试要求（仅适用于第1、2、4、5、6、10、11类）。详见《指引》4.4.2.1(b)及4.4.3.1(b)。",
+                never_p1_help: "根据《指引》4.4.3.7，现时或3年内曾持牌的LR若从未尝试过卷一考试，可获有条件豁免，但需额外完成+5 CPT小时（本地监管知识）。",
+                licensed_hk_exp_help: "在香港持有证监会牌照从事受规管活动的总年资。若您目前持牌为LR并申请升级为同一类别的RO，需具备3年以上持牌经验方可获有条件豁免LRP考试（《指引》4.4.3.4）。",
+                schedule3_exp_help: "在《证券及期货(在证券市场上市)规则》附表3所列认可交易所的司法管辖区（如美国、英国、日本、澳洲、新加坡等）从事相关受规管活动的经验年资。8年以上可获有条件豁免（《指引》4.4.3.2及4.4.3.5）。",
+                regulatory_work_help: "在香港从事全职监管或合规工作（如在证监会、金管局、保监局或持牌法团的合规部门工作）。符合者可获完全豁免LRP考试（《指引》4.4.3.1(c)）。",
+                limited_scope_help: "指RO只从事有限范围的受规管活动（如仅处理机构客户或专业投资者业务），或担任高级管理人员角色（如CEO、COO）而非直接从事前线业务。适用于具丰富海外经验者的有条件豁免（《指引》4.4.3.2）。",
+                ro_support_help: "指公司已指定一名现有的负责人员（具备完整本地监管知识）为您提供监督及支援。这是具丰富海外经验者获有条件豁免的必要条件（《指引》4.4.3.2）。",
+                itinerant_help: "指每年在香港逗留不超过30天、主要在海外工作的专业人士。巡回专业人士可获有条件豁免LRP考试，但牌照会附带相关条件限制其在港活动范围（《指引》4.4.3.6）。",
                 // Exemption result translations
                 exempt_full: "完全豁免",
                 exempt_conditional: "有条件豁免",
